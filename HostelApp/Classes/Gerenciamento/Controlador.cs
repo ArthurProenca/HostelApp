@@ -9,12 +9,12 @@ namespace HostelApp.Classes.Gerenciamento
         {
             int id;
             Console.WriteLine("Digite o ID do quarto: ");
-            id = Console.Read();
+            id = Convert.ToInt32(Console.ReadLine());
 
             VerificaReserva(id);
             if (VerificaReserva(id))
             {
-                Console.WriteLine("O quarto " + id + "pode ser reservado.");
+                Console.WriteLine("O quarto " + id + " pode ser reservado.");
                 return true;
             }
 
@@ -43,14 +43,8 @@ namespace HostelApp.Classes.Gerenciamento
             Funcionario f = new Funcionario(nome, us, matricula); //Crio uma instância, mas não adiciono aos administradores.
             Administrador admin = new Administrador();
 
-            if (admin.RetornaFuncionarios().Contains(f))
-            {
-                Console.WriteLine("Sou funcionário.");
-            }
-            else
-            {
-                Console.WriteLine("Não sou funcionário.");
-            }
+            Quartos q = new Quartos();
+            q.RetornaQuartos();
         }
     }
 }

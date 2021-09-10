@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections;
+using System.Collections.Generic;
 using HostelApp.Classes.Gerenciamento;
 
 namespace HostelApp.Classes
@@ -7,14 +8,26 @@ namespace HostelApp.Classes
     public class Administrador
     {
         private string titulo;
-        private ArrayList Quartos;
-        private ArrayList Funcionarios;
+        private List<Quartos> Quartos;
+        private List<Funcionario> Funcionarios;
 
         public Administrador()
         {
         }
 
-        public Administrador(string nome, Usuarios us, string matricula, string titulo)
+        public List<Quartos> Quartos1
+        {
+            get => Quartos;
+            set => Quartos = value;
+        }
+
+        public List<Funcionario> Funcionarios1
+        {
+            get => Funcionarios;
+            set => Funcionarios = value;
+        }
+
+        public Administrador(string titulo)
         {
             this.titulo = titulo;
         }
@@ -28,7 +41,7 @@ namespace HostelApp.Classes
         public void CriaQuarto()
         {
             int id = Quartos.Count + 1;
-            Console.WriteLine("Digite a descrição do quarto");
+            Console.WriteLine("Digite a descrição do quarto: ");
             string descricao = Console.ReadLine();
             Console.WriteLine("Digite o preço do quarto: ");
             double preco = Convert.ToDouble(Console.ReadLine());
@@ -49,12 +62,7 @@ namespace HostelApp.Classes
 
             AdicionaFuncionarios(f);
         }
-
-        public ArrayList RetornaQuartos()
-        {
-            return Quartos;
-        }
-
+        
         public int AdicionaQuarto(Quartos q)
         {
             Quartos.Add(q);
@@ -66,11 +74,6 @@ namespace HostelApp.Classes
             Quartos.Remove(q);
         }
 
-        public ArrayList RetornaFuncionarios()
-        {
-            return Funcionarios;
-        }
-
         public int AdicionaFuncionarios(Funcionario f)
         {
             Funcionarios.Add(f);
@@ -79,7 +82,7 @@ namespace HostelApp.Classes
 
         public void DeletaFuncionarios(Funcionario f)
         {
-            Quartos.Remove(f);
+            Funcionarios.Remove(f);
         }
 
     }
