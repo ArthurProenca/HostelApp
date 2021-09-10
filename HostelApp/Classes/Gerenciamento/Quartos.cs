@@ -1,4 +1,7 @@
-﻿namespace HostelApp.Classes.Gerenciamento
+﻿using System;
+using System.Collections;
+
+namespace HostelApp.Classes.Gerenciamento
 {
     public class Quartos
     {
@@ -44,6 +47,11 @@
 
         public bool BuscaQuarto(int id)
         {
+            Administrador admin = new Administrador();
+            if (admin.RetornaQuartos().Contains(id))
+            {
+                return true;
+            }
             return false;
         }
 

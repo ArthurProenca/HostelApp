@@ -33,6 +33,9 @@ namespace HostelApp.Classes.Gerenciamento
 
         public void AreaStaff()
         {
+            Console.WriteLine("Digite sua matricula: ");
+            string matricula = Console.ReadLine();
+            
             
         }
     }
