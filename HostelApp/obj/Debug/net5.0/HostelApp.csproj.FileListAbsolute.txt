@@ -1,0 +1,16 @@
+C:\Users\arthu\RiderProjects\HostelApp\HostelApp\bin\Debug\net5.0\HostelApp.exe
+C:\Users\arthu\RiderProjects\HostelApp\HostelApp\bin\Debug\net5.0\HostelApp.deps.json
+C:\Users\arthu\RiderProjects\HostelApp\HostelApp\bin\Debug\net5.0\HostelApp.runtimeconfig.json
+C:\Users\arthu\RiderProjects\HostelApp\HostelApp\bin\Debug\net5.0\HostelApp.runtimeconfig.dev.json
+C:\Users\arthu\RiderProjects\HostelApp\HostelApp\bin\Debug\net5.0\HostelApp.dll
+C:\Users\arthu\RiderProjects\HostelApp\HostelApp\bin\Debug\net5.0\ref\HostelApp.dll
+C:\Users\arthu\RiderProjects\HostelApp\HostelApp\bin\Debug\net5.0\HostelApp.pdb
+C:\Users\arthu\RiderProjects\HostelApp\HostelApp\obj\Debug\net5.0\HostelApp.csproj.AssemblyReference.cache
+C:\Users\arthu\RiderProjects\HostelApp\HostelApp\obj\Debug\net5.0\HostelApp.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\arthu\RiderProjects\HostelApp\HostelApp\obj\Debug\net5.0\HostelApp.AssemblyInfoInputs.cache
+C:\Users\arthu\RiderProjects\HostelApp\HostelApp\obj\Debug\net5.0\HostelApp.AssemblyInfo.cs
+C:\Users\arthu\RiderProjects\HostelApp\HostelApp\obj\Debug\net5.0\HostelApp.csproj.CoreCompileInputs.cache
+C:\Users\arthu\RiderProjects\HostelApp\HostelApp\obj\Debug\net5.0\HostelApp.dll
+C:\Users\arthu\RiderProjects\HostelApp\HostelApp\obj\Debug\net5.0\ref\HostelApp.dll
+C:\Users\arthu\RiderProjects\HostelApp\HostelApp\obj\Debug\net5.0\HostelApp.pdb
+C:\Users\arthu\RiderProjects\HostelApp\HostelApp\obj\Debug\net5.0\HostelApp.genruntimeconfig.cache

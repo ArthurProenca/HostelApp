@@ -1,0 +1,16 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HostelApp", "HostelApp\HostelApp.csproj", "{313BC351-3425-4612-AD1A-8CD4173D6142}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{313BC351-3425-4612-AD1A-8CD4173D6142}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{313BC351-3425-4612-AD1A-8CD4173D6142}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{313BC351-3425-4612-AD1A-8CD4173D6142}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{313BC351-3425-4612-AD1A-8CD4173D6142}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal
