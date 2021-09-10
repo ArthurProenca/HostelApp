@@ -40,9 +40,8 @@ namespace HostelApp.Classes
                 Console.WriteLine("Bem vindo(a) ao sistema de controle." +
                                   "\n Menu:" +
                                   "\n 1 - Criar reserva" +
-                                  "\n 2 - Verificar reservas" +
-                                  "\n 3 - Área da Staff" +
-                                  "\n 4 - Logout");
+                                  "\n 2 - Área da Staff" +
+                                  "\n 3 - Logout");
                 var opt = Convert.ToInt64(Console.ReadLine());
                 switch (opt)
                 {
@@ -58,12 +57,9 @@ namespace HostelApp.Classes
                         }
                         break;
                     case 2:
-                        c.VerificaReserva();
-                        break;
-                    case 3:
                         c.AreaStaff();
                         break;
-                    case 4:
+                    case 3:
                         aux = 1;
                         break;
                     default:

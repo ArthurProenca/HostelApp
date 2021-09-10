@@ -42,5 +42,10 @@
             set => status = value;
         }
 
+        public bool BuscaQuarto(int id)
+        {
+            return false;
+        }
+
     }
 }
