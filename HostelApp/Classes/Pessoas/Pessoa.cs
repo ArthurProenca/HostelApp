@@ -4,6 +4,9 @@ namespace HostelApp.Classes
 {
     public class Pessoa
     {
+        private string nome;
+        private Usuarios usuario;
+
         public Pessoa()
         {
         }
@@ -13,10 +16,7 @@ namespace HostelApp.Classes
             this.nome = nome;
             this.usuario = usuario;
         }
-
-        private string nome;
-        private Usuarios usuario;
-
+        
         public string Nome
         {
             get => nome;

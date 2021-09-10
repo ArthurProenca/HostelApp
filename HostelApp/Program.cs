@@ -11,7 +11,5 @@ namespace HostelApp
             ControlaLogin el = new ControlaLogin();
             el.CriaTela();
         }
-
-        
     }
 }

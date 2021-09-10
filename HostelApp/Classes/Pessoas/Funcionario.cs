@@ -4,6 +4,10 @@
     {
         private string matricula;
 
+        public Funcionario()
+        {
+        }
+
         public Funcionario(string nome, Usuarios us, string matricula) : base (nome, us)
         {
             this.matricula = matricula;
