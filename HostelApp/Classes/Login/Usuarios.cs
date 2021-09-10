@@ -57,7 +57,7 @@ namespace HostelApp.Classes
                         }
                         break;
                     case 2:
-                        c.AreaStaff();
+                        c.AreaStaff(us);
                         break;
                     case 3:
                         aux = 1;

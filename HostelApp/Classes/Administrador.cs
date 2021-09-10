@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using HostelApp.Classes.Gerenciamento;
 
 namespace HostelApp.Classes
@@ -8,6 +9,7 @@ namespace HostelApp.Classes
         private string titulo;
         private ArrayList Quartos;
         private ArrayList Funcionarios;
+
         public Administrador()
         {
         }
@@ -21,6 +23,31 @@ namespace HostelApp.Classes
         {
             get => titulo;
             set => titulo = value;
+        }
+
+        public void CriaQuarto()
+        {
+            int id = Quartos.Count + 1;
+            Console.WriteLine("Digite a descrição do quarto");
+            string descricao = Console.ReadLine();
+            Console.WriteLine("Digite o preço do quarto: ");
+            double preco = Convert.ToDouble(Console.ReadLine());
+
+            Quartos q = new Quartos(id, descricao, preco, false);
+
+            AdicionaQuarto(q);
+        }
+
+        public void CriaFuncionario(Usuarios us)
+        {
+            Console.WriteLine("Digite o nome do funcionário: ");
+            string nome = Console.ReadLine();
+            Console.WriteLine("Digite a matrícula do funcionário: ");
+            string matricula = Console.ReadLine();
+
+            Funcionario f = new Funcionario(nome, us, matricula);
+
+            AdicionaFuncionarios(f);
         }
 
         public ArrayList RetornaQuartos()
@@ -38,7 +65,7 @@ namespace HostelApp.Classes
         {
             Quartos.Remove(q);
         }
-        
+
         public ArrayList RetornaFuncionarios()
         {
             return Funcionarios;

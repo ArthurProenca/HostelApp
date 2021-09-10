@@ -7,13 +7,13 @@ namespace HostelApp.Classes.Gerenciamento
     {
         private int id;
         private string descricao;
-        private float preco;
+        private double preco;
         private bool status; 
         public Quartos()
         {
         }
 
-        public Quartos(int id, string descricao, float preco, bool status)
+        public Quartos(int id, string descricao, double preco, bool status)
         {
             this.id = id;
             this.descricao = descricao;
@@ -33,7 +33,7 @@ namespace HostelApp.Classes.Gerenciamento
             set => descricao = value;
         }
 
-        public float Preco
+        public double Preco
         {
             get => preco;
             set => preco = value;
