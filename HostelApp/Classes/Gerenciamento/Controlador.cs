@@ -8,6 +8,7 @@ namespace HostelApp.Classes.Gerenciamento
 
         public bool CriaReserva(Usuarios us)
         {
+            Console.WriteLine(us.Usuario);
             int id;
             Console.WriteLine("Digite o ID do quarto: ");
             id = Convert.ToInt32(Console.ReadLine());
@@ -20,13 +21,9 @@ namespace HostelApp.Classes.Gerenciamento
                 Console.WriteLine("Digite a data de saída: ");
                 string dataSaida = Console.ReadLine();
 
-                Hospede h = new Hospede(us.Usuario, us, id);
-                Reservas rs = new Reservas(h, dataEntrada, dataSaida);
+                Reservas r = new Reservas( id,  id, dataEntrada,  dataSaida,  us.Usuario, us.Senha);
                 
-                EasyCSV.InsereCSV(
-                    (rs.Hospede.Nome + ", " + rs.Hospede.NumeroQuarto + ", " + dataEntrada + ", " + dataSaida),
-                    "reservas.csv");
-                
+                EasyCSV.InsereCSV(id + ", " + id + ", " + dataEntrada + ", " + dataSaida + ", " + us.Usuario + ", " + us.Senha, "reservas.csv");
                 return true;
             }
 

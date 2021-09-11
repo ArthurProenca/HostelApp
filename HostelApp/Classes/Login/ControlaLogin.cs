@@ -39,6 +39,8 @@ namespace HostelApp.Classes.Login
                 case 0: //Login.
                     if (us.LoginUser(usuario, senha, "users.csv"))
                     {
+                        us.Senha = senha;
+                        us.Usuario = usuario;
                         us.IniciaSistema(us);
                         break;
                     }

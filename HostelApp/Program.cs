@@ -12,8 +12,8 @@ namespace HostelApp
             
             admin.setFuncionarios();
             admin.setQuartos();
-            admin.setReservas();
             admin.setUsuarios();
+            admin.setReservas();
             
             el.CriaTela();
         }
