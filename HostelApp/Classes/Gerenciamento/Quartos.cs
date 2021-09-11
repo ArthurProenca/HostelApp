@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections;
-using System.Collections.Generic;
 
 namespace HostelApp.Classes.Gerenciamento
 {
@@ -49,16 +47,16 @@ namespace HostelApp.Classes.Gerenciamento
         public Quartos BuscaQuarto(int id)
         {
             Administrador admin = new Administrador();
-            return admin.Quartos[id];
+            return admin.getQuartos[id];
         }
 
         public void RetornaQuartos()
         {
             Administrador admin = new Administrador();
             
-            for (int i = 0; i < admin.Quartos.Count; i++)
+            for (int i = 0; i < admin.getQuartos.Count; i++)
             {
-                Console.WriteLine("\nQuarto: " + admin.Quartos[i]);
+                Console.WriteLine("\nQuarto: " + admin.getQuartos[i]);
             }
             Console.WriteLine();
         }

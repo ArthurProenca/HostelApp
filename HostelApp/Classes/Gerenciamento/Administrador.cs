@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
 using HostelApp.Classes.Gerenciamento;
 
@@ -10,6 +9,10 @@ namespace HostelApp.Classes
         private string _titulo;
         private List<Quartos> Quartos = new List<Quartos>();
         private List<Funcionario> Funcionarios = new List<Funcionario>();
+
+        public List<Quartos> getQuartos => Quartos;
+
+        public List<Funcionario> getFuncionarios => Funcionarios;
 
         public string Titulo
         {

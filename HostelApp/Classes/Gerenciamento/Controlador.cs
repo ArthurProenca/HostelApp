@@ -42,9 +42,9 @@ namespace HostelApp.Classes.Gerenciamento
             
             admin.CriaFuncionario();
             
-            for (int i = 0; i < admin.Funcionarios.Count; i++)
+            for (int i = 0; i < admin.getFuncionarios.Count; i++)
             {
-                if (admin.Funcionarios[i].Matricula == matricula)
+                if (admin.getFuncionarios[i].Matricula == matricula)
                 {
                     admin.Administracao();
                     break;
