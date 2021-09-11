@@ -40,11 +40,15 @@ namespace HostelApp.Classes.Gerenciamento
             Console.WriteLine("Digite sua matricula: ");
             string matricula = Console.ReadLine();
 
-            Funcionario f = new Funcionario(nome, us, matricula); //Crio uma instância, mas não adiciono aos administradores.
             Administrador admin = new Administrador();
-
-            Quartos q = new Quartos();
-            q.RetornaQuartos();
+            for (int i = 0; i < admin.Funcionarios1.Count; i++)
+            {
+                if (admin.Funcionarios1[i].Matricula == matricula)
+                {
+                    admin.Administracao(us);
+                    break;
+                }
+            }
         }
     }
 }

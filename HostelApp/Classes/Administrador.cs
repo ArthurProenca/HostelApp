@@ -27,6 +27,45 @@ namespace HostelApp.Classes
             set => Funcionarios = value;
         }
 
+        public void Administracao(Usuarios us)
+        {
+            int opt = 0;
+            while (opt != 5)
+            {
+                Console.WriteLine("\n 1 - Criar Quarto" +
+                                  "\n 2 - Cadastro de Funcionário" +
+                                  "\n 3 - Deletar Quarto" +
+                                  "\n 4 - Deletar Funcionário" +
+                                  "\n 5 - Voltar");
+
+                opt = Convert.ToInt32(Console.ReadLine());
+
+                switch (opt)
+                {
+                    case 1:
+                        CriaQuarto();
+                        break;
+                    case 2:
+                        CriaFuncionario(us);
+                        break;
+                    case 3:
+                        Console.WriteLine("Digite o ID do quarto a ser removido: ");
+                        int id = Convert.ToInt32(Console.ReadLine());
+                        DeletaQuarto(id);
+                        break;
+                    case 4:
+                        Console.WriteLine("Digite o ID do funcionário a ser removido: ");
+                        id = Convert.ToInt32(Console.ReadLine());
+                        DeletaFuncionarios(id);
+                        break;
+                    case 5:
+                        opt = 5;
+                        break;
+                }
+            }
+        }
+
+
         public Administrador(string titulo)
         {
             this.titulo = titulo;
@@ -48,7 +87,7 @@ namespace HostelApp.Classes
 
             Quartos q = new Quartos(id, descricao, preco, false);
 
-            AdicionaQuarto(q);
+            Quartos.Add(q);
         }
 
         public void CriaFuncionario(Usuarios us)
@@ -58,31 +97,20 @@ namespace HostelApp.Classes
             Console.WriteLine("Digite a matrícula do funcionário: ");
             string matricula = Console.ReadLine();
 
-            Funcionario f = new Funcionario(nome, us, matricula);
 
-            AdicionaFuncionarios(f);
-        }
-        
-        public int AdicionaQuarto(Quartos q)
-        {
-            Quartos.Add(q);
-            return Quartos.Count;
-        }
+            Funcionario f = new Funcionario(nome, us, matricula, Funcionarios.Count + 1);
 
-        public void DeletaQuarto(Quartos q)
-        {
-            Quartos.Remove(q);
-        }
-
-        public int AdicionaFuncionarios(Funcionario f)
-        {
             Funcionarios.Add(f);
-            return Funcionarios.Count;
         }
 
-        public void DeletaFuncionarios(Funcionario f)
+        public void DeletaQuarto(int id)
         {
-            Funcionarios.Remove(f);
+            Quartos.RemoveAt(id);
+        }
+
+        public void DeletaFuncionarios(int id)
+        {
+            Funcionarios.RemoveAt(id);
         }
 
     }
