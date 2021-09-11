@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
+using System.Linq;
 using HostelApp.Classes.Gerenciamento;
 using HostelApp.Database;
 
@@ -25,7 +27,7 @@ namespace HostelApp.Classes
         {
             string aux;
             string[] temp;
-            
+
             for (int i = 0; i < EasyCSV.LeCSV("quartos.csv").Count; i++)
             {
                 aux = EasyCSV.LeCSV("quartos.csv")[i];
@@ -34,26 +36,22 @@ namespace HostelApp.Classes
                 temp[2] = temp[2].Replace(" ", String.Empty);
                 temp[3] = temp[3].Replace(" ", String.Empty);
 
-                Quartos q = new Quartos(Convert.ToInt32(temp[0]), temp[1], Convert.ToDouble(temp[2]),
-                    Convert.ToBoolean(temp[3]));
-                Quartos.Add(q);
+                Quartos.Add(new Quartos(Convert.ToInt32(temp[0]), temp[1], Convert.ToDouble(temp[2]),
+                    Convert.ToBoolean(temp[3])));
             }
         }
-        
+
         public void setFuncionarios()
         {
             string aux;
             string[] temp;
-            
             for (int i = 0; i < EasyCSV.LeCSV("staff.csv").Count; i++)
             {
                 aux = EasyCSV.LeCSV("staff.csv")[i];
                 temp = aux.Split(",");
                 temp[1] = temp[1].Replace(" ", String.Empty);
                 temp[2] = temp[2].Replace(" ", String.Empty);
-
-                Funcionario f = new Funcionario(temp[0], temp[1], Convert.ToInt32(temp[2]));
-                Funcionarios.Add(f);
+                Funcionarios.Add(new Funcionario(temp[0], temp[1], Convert.ToInt32(temp[2])));
             }
         }
 
@@ -114,7 +112,7 @@ namespace HostelApp.Classes
             Console.WriteLine("Digite a matrícula do funcionário: ");
             string matricula = Console.ReadLine();
 
-            EasyCSV.InsereCSV(nome + ", " + matricula + ", " + Funcionarios.Count + 1, "staff.csv");
+            EasyCSV.InsereCSV(nome + ", " + matricula + ", " + Convert.ToInt32(Funcionarios.Count + 1), "staff.csv");
 
             Funcionarios.Add(new Funcionario(nome, matricula, Funcionarios.Count + 1));
         }
@@ -140,12 +138,52 @@ namespace HostelApp.Classes
 
         public void DeletaQuarto(int id)
         {
-            Quartos.RemoveAt(id);
+            List<string> aux = EasyCSV.LeCSV("quartos.csv");
+            string[] temp;
+            if (id <= EasyCSV.LeCSV("quartos.csv").Count)
+            {
+                aux.RemoveAt(id);
+                EasyCSV.CriaCSV("quartos.csv");
+                for (int i = 0; i < aux.Count; i++)
+                {
+                    temp = aux[i].Split(",");
+                    temp[1] = temp[1].Replace(" ", String.Empty);
+                    temp[2] = temp[2].Replace(" ", String.Empty);
+                    temp[3] = temp[3].Replace(" ", String.Empty);
+                    EasyCSV.InsereCSV((temp[0] + ", " + temp[1] + ", " + temp[2] + ", " + temp[3]), "quartos.csv");
+                }
+
+                setQuartos();
+            }
+            else
+            {
+                Console.WriteLine("Não é possível remover esse quarto.");
+            }
         }
 
         public void DeletaFuncionarios(int id)
         {
-            Funcionarios.RemoveAt(id);
+            List<string> aux = EasyCSV.LeCSV("staff.csv");
+            string[] temp;
+            if (id <= EasyCSV.LeCSV("staff.csv").Count)
+            {
+                Console.WriteLine(aux[0]);
+                aux.RemoveAt(id);
+                EasyCSV.CriaCSV("staff.csv");
+                for (int i = 0; i < aux.Count; i++)
+                {
+                    temp = aux[i].Split(",");
+                    temp[1] = temp[1].Replace(" ", String.Empty);
+                    temp[2] = temp[2].Replace(" ", String.Empty);
+                    EasyCSV.InsereCSV((temp[0] + ", " + temp[1] + ", " + temp[2]), "staff.csv");
+                }
+
+                setFuncionarios();
+            }
+            else
+            {
+                Console.WriteLine("Não é possível remover esse funcionário.");
+            }
         }
 
     }
