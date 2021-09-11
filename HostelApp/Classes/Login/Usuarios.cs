@@ -1,5 +1,8 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using HostelApp.Classes.Gerenciamento;
+using HostelApp.Database;
 
 namespace HostelApp.Classes
 {
@@ -22,15 +25,35 @@ namespace HostelApp.Classes
 
         public bool CheckUser(string usuario)
         {
-            return (this._usuario == usuario);
+            string aux;
+            for (int i = 0; i < EasyCSV.LeCSV().Count; i++)
+            {
+                aux = EasyCSV.LeCSV()[i];
+                if (aux.Substring(0,aux.IndexOf(",", StringComparison.Ordinal)) == usuario)
+                {
+                    return true;
+                }
+            }
+
+            return false;
         }
 
         public bool LoginUser(string usuario, string senha)
         {
-            return (this._usuario == usuario && this._senha == senha);
+            string aux;
+            for (int i = 0; i < EasyCSV.LeCSV().Count; i++)
+            {
+                aux = EasyCSV.LeCSV()[i];
+                if (aux.Substring(0,aux.IndexOf(",", StringComparison.Ordinal)) == usuario && aux.Substring(0,aux.LastIndexOf(",", StringComparison.Ordinal)) == senha)
+                {
+                    return true;
+                }
+            }
+
+            return false;
         }
 
-        public void IniciaSistema(Usuarios us)
+        public void IniciaSistema()
         {
             int aux = 0;
             Controlador c = new Controlador();
@@ -43,7 +66,7 @@ namespace HostelApp.Classes
                                   "\n 2 - Área da Staff" +
                                   "\n 3 - Logout");
                 var opt = Convert.ToInt64(Console.ReadLine());
-                
+
                 switch (opt)
                 {
                     case 1:
@@ -52,10 +75,12 @@ namespace HostelApp.Classes
                             Console.WriteLine("Reserva criada com sucesso.");
                             break;
                         }
+
                         if (!c.CriaReserva())
                         {
                             Console.WriteLine("Falha na criação de reserva.");
                         }
+
                         break;
                     case 2:
                         c.AreaStaff();
@@ -67,6 +92,7 @@ namespace HostelApp.Classes
                         Console.WriteLine("Opção inválida.");
                         break;
                 }
+
                 Console.Clear();
             }
         }

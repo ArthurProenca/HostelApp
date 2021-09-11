@@ -29,14 +29,15 @@ namespace HostelApp.Classes.Login
                     us.Usuario = usuario;
                     us.Senha = senha;
                     
-                    EasyCSV.InsereCSV(usuario + "," + senha);
-                    us.IniciaSistema(us);
+                    EasyCSV.InsereCSV(usuario + ", " + senha);
+                    
+                    us.IniciaSistema();
                     break;
 
                 case 0: //Login.
                     if (us.LoginUser(usuario, senha))
                     {
-                        us.IniciaSistema(us);
+                        us.IniciaSistema();
                         break;
                     }
 

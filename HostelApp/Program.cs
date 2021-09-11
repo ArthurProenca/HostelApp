@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using HostelApp.Classes;
-using HostelApp.Classes.Login;
-using HostelApp.Database;
+﻿using HostelApp.Classes.Login;
 
 namespace HostelApp
 {
