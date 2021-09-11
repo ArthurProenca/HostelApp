@@ -1,4 +1,5 @@
-﻿using HostelApp.Classes.Login;
+﻿using HostelApp.Classes;
+using HostelApp.Classes.Login;
 
 namespace HostelApp
 {
@@ -7,6 +8,9 @@ namespace HostelApp
         public static void Main(string[] args)
         {
             ControlaLogin el = new ControlaLogin();
+            Administrador admin = new Administrador();
+            admin.setFuncionarios();
+            admin.setQuartos();
             el.CriaTela();
         }
     }

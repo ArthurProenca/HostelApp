@@ -21,6 +21,42 @@ namespace HostelApp.Classes
             set => _titulo = value;
         }
 
+        public void setQuartos()
+        {
+            string aux;
+            string[] temp;
+            
+            for (int i = 0; i < EasyCSV.LeCSV("quartos.csv").Count; i++)
+            {
+                aux = EasyCSV.LeCSV("quartos.csv")[i];
+                temp = aux.Split(",");
+                temp[1] = temp[1].Replace(" ", String.Empty);
+                temp[2] = temp[2].Replace(" ", String.Empty);
+                temp[3] = temp[3].Replace(" ", String.Empty);
+
+                Quartos q = new Quartos(Convert.ToInt32(temp[0]), temp[1], Convert.ToDouble(temp[2]),
+                    Convert.ToBoolean(temp[3]));
+                Quartos.Add(q);
+            }
+        }
+        
+        public void setFuncionarios()
+        {
+            string aux;
+            string[] temp;
+            
+            for (int i = 0; i < EasyCSV.LeCSV("staff.csv").Count; i++)
+            {
+                aux = EasyCSV.LeCSV("staff.csv")[i];
+                temp = aux.Split(",");
+                temp[1] = temp[1].Replace(" ", String.Empty);
+                temp[2] = temp[2].Replace(" ", String.Empty);
+
+                Funcionario f = new Funcionario(temp[0], temp[1], Convert.ToInt32(temp[2]));
+                Funcionarios.Add(f);
+            }
+        }
+
         public void Administracao()
         {
             Quartos q = new Quartos();
@@ -66,9 +102,9 @@ namespace HostelApp.Classes
             string descricao = Console.ReadLine();
             Console.WriteLine("Digite o preço do quarto: ");
             double preco = Convert.ToDouble(Console.ReadLine());
-
+            int id = Quartos.Count + 1;
+            EasyCSV.InsereCSV(id + ", " + descricao + ", " + preco + ", " + "false", "quartos.csv");
             Quartos.Add(new Quartos(Quartos.Count + 1, descricao, preco, false));
-            EasyCSV.InsereCSV(Quartos[Quartos.Count + 1].ToString(), "reservas.csv");
         }
 
         public void CriaFuncionario()
@@ -78,7 +114,28 @@ namespace HostelApp.Classes
             Console.WriteLine("Digite a matrícula do funcionário: ");
             string matricula = Console.ReadLine();
 
+            EasyCSV.InsereCSV(nome + ", " + matricula + ", " + Funcionarios.Count + 1, "staff.csv");
+
             Funcionarios.Add(new Funcionario(nome, matricula, Funcionarios.Count + 1));
+        }
+
+        public bool CheckFuncionario(string matricula)
+        {
+            string aux;
+            string[] temp;
+
+            for (int i = 0; i < EasyCSV.LeCSV("staff.csv").Count; i++)
+            {
+                aux = EasyCSV.LeCSV("staff.csv")[i];
+                temp = aux.Split(",");
+                temp[1] = temp[1].Replace(" ", String.Empty);
+                if (temp[1].Equals(matricula))
+                {
+                    return true;
+                }
+            }
+
+            return false;
         }
 
         public void DeletaQuarto(int id)

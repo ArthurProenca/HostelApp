@@ -11,7 +11,6 @@ namespace HostelApp.Classes.Gerenciamento
             Console.WriteLine("Digite o ID do quarto: ");
             id = Convert.ToInt32(Console.ReadLine());
 
-            VerificaReserva(id);
             if (VerificaReserva(id))
             {
                 Console.WriteLine("O quarto " + id + " pode ser reservado.");
@@ -39,17 +38,11 @@ namespace HostelApp.Classes.Gerenciamento
             string matricula = Console.ReadLine();
 
             Administrador admin = new Administrador();
-            
-            admin.CriaFuncionario();
-            
-            for (int i = 0; i < admin.getFuncionarios.Count; i++)
+            if (admin.CheckFuncionario(matricula))
             {
-                if (admin.getFuncionarios[i].Matricula == matricula)
-                {
-                    admin.Administracao();
-                    break;
-                }
+                admin.Administracao();
             }
+            Console.WriteLine("Matrícula não consta no sistema.");
         }
     }
 }
