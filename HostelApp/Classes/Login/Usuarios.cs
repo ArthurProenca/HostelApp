@@ -9,6 +9,16 @@ namespace HostelApp.Classes
         private string _usuario;
         private string _senha;
 
+        public Usuarios()
+        {
+        }
+
+        public Usuarios(string usuario, string senha)
+        {
+            _usuario = usuario;
+            _senha = senha;
+        }
+
         public string Usuario
         {
             get => _usuario;
@@ -56,8 +66,9 @@ namespace HostelApp.Classes
             return false;
         }
 
-        public void IniciaSistema()
+        public void IniciaSistema(Usuarios us)
         {
+            Console.Clear();
             int aux = 0;
             Controlador c = new Controlador();
 
@@ -73,13 +84,13 @@ namespace HostelApp.Classes
                 switch (opt)
                 {
                     case 1:
-                        if (c.CriaReserva())
+                        if (c.CriaReserva(us))
                         {
                             Console.WriteLine("Reserva criada com sucesso.");
                             break;
                         }
 
-                        if (!c.CriaReserva())
+                        if (!c.CriaReserva(us))
                         {
                             Console.WriteLine("Falha na criação de reserva.");
                         }

@@ -12,6 +12,7 @@ namespace HostelApp.Classes
         private string _titulo;
         private List<Quartos> Quartos = new List<Quartos>();
         private List<Funcionario> Funcionarios = new List<Funcionario>();
+        private List<Usuarios> Usuarios = new List<Usuarios>();
 
         public List<Quartos> getQuartos => Quartos;
 
@@ -52,6 +53,34 @@ namespace HostelApp.Classes
                 temp[1] = temp[1].Replace(" ", String.Empty);
                 temp[2] = temp[2].Replace(" ", String.Empty);
                 Funcionarios.Add(new Funcionario(temp[0], temp[1], Convert.ToInt32(temp[2])));
+            }
+        }
+
+        public void setUsuarios()
+        {
+            string aux;
+            string[] temp;
+            for (int i = 0; i < EasyCSV.LeCSV("users.csv").Count; i++)
+            {
+                //arthur, 123
+                aux = EasyCSV.LeCSV("users.csv")[i];
+                temp = aux.Split(",");
+                temp[1] = temp[1].Replace(" ", String.Empty);
+                Usuarios.Add(new Usuarios(temp[0], temp[1]));
+            }
+        }
+        
+        public void setReservas()
+        {
+            string aux;
+            string[] temp;
+            for (int i = 0; i < EasyCSV.LeCSV("reservas.csv").Count; i++)
+            {
+                
+                aux = EasyCSV.LeCSV("reservas.csv")[i];
+                temp = aux.Split(",");
+                temp[1] = temp[1].Replace(" ", String.Empty);
+                Usuarios.Add(new Usuarios(temp[0], temp[1]));
             }
         }
 

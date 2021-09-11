@@ -22,22 +22,24 @@ namespace HostelApp.Classes.Login
                 case 1: //Cadastro.
                     if (us.CheckUser(usuario, "users.csv"))
                     {
+                        Console.Clear();
                         Console.WriteLine("Usuário já existe.");
                         break;
                     }
-
-                    us.Usuario = usuario;
-                    us.Senha = senha;
-                    
-                    EasyCSV.InsereCSV(usuario + ", " + senha, "users.csv");
-                    
-                    us.IniciaSistema();
-                    break;
+                    else
+                    {
+                        
+                        EasyCSV.InsereCSV(usuario + ", " + senha, "users.csv");
+                        us.Senha = senha;
+                        us.Usuario = usuario;
+                        us.IniciaSistema(us);
+                        break;
+                    }
 
                 case 0: //Login.
                     if (us.LoginUser(usuario, senha, "users.csv"))
                     {
-                        us.IniciaSistema();
+                        us.IniciaSistema(us);
                         break;
                     }
 
@@ -48,26 +50,34 @@ namespace HostelApp.Classes.Login
 
         public void CriaTela()
         {
-            Console.WriteLine("Olá, seja bem vindo(a) ao sistema de cadastro do HostelApp.");
-            Console.WriteLine("Menu:\n" +
-                              "\n1 - Cadastro:" +
-                              "\n2 - Login" +
-                              "\n3 - Sair" +
-                              "\nDigite sua opção abaixo:");
-
-            var opt = Convert.ToInt64(Console.ReadLine());
-
-            switch (opt)
+            int aux = 10;
+            while (aux != 0)
             {
-                case 1:
-                    Cadastro(1);
-                    break;
-                case 2:
-                    Cadastro(0);
-                    break;
-                default:
-                    Console.WriteLine("Opção inválida.");
-                    break;
+                Console.WriteLine("Olá, seja bem vindo(a) ao sistema de cadastro do HostelApp.");
+                Console.WriteLine("Menu:\n" +
+                                  "\n1 - Cadastro:" +
+                                  "\n2 - Login" +
+                                  "\n3 - Sair" +
+                                  "\nDigite sua opção abaixo:");
+
+                var opt = Convert.ToInt64(Console.ReadLine());
+
+                switch (opt)
+                {
+                    case 1:
+                        Cadastro(1);
+                        break;
+                    case 2:
+                        Cadastro(0);
+                        break;
+                    case 3:
+                        aux = 0;
+                        break;
+                    default:
+                        Console.Clear();
+                        Console.WriteLine("+=+=+=+= Opção inválida. +=+=+=+= ");
+                        break;
+                }
             }
         }
     }

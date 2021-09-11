@@ -1,4 +1,5 @@
 ﻿using System;
+using HostelApp.Database;
 
 namespace HostelApp.Classes.Gerenciamento
 {

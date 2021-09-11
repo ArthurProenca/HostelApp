@@ -9,8 +9,12 @@ namespace HostelApp
         {
             ControlaLogin el = new ControlaLogin();
             Administrador admin = new Administrador();
+            
             admin.setFuncionarios();
             admin.setQuartos();
+            admin.setReservas();
+            admin.setUsuarios();
+            
             el.CriaTela();
         }
     }

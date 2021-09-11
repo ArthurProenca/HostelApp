@@ -1,11 +1,12 @@
 ﻿using System;
+using HostelApp.Database;
 
 namespace HostelApp.Classes.Gerenciamento
 {
     public class Controlador
     {
 
-        public bool CriaReserva()
+        public bool CriaReserva(Usuarios us)
         {
             int id;
             Console.WriteLine("Digite o ID do quarto: ");
@@ -14,6 +15,18 @@ namespace HostelApp.Classes.Gerenciamento
             if (VerificaReserva(id))
             {
                 Console.WriteLine("O quarto " + id + " pode ser reservado.");
+                Console.WriteLine("Digite a data de entrada: ");
+                string dataEntrada = Console.ReadLine();
+                Console.WriteLine("Digite a data de saída: ");
+                string dataSaida = Console.ReadLine();
+
+                Hospede h = new Hospede(us.Usuario, us, id);
+                Reservas rs = new Reservas(h, dataEntrada, dataSaida);
+                
+                EasyCSV.InsereCSV(
+                    (rs.Hospede.Nome + ", " + rs.Hospede.NumeroQuarto + ", " + dataEntrada + ", " + dataSaida),
+                    "reservas.csv");
+                
                 return true;
             }
 
@@ -42,6 +55,7 @@ namespace HostelApp.Classes.Gerenciamento
             {
                 admin.Administracao();
             }
+
             Console.WriteLine("Matrícula não consta no sistema.");
         }
     }
