@@ -33,19 +33,20 @@ namespace HostelApp.Classes.Gerenciamento
             return true;
         }
 
-        public void AreaStaff(Usuarios us)
+        public void AreaStaff()
         {
-            Console.WriteLine("Digite seu nome: ");
-            string nome = Console.ReadLine();
             Console.WriteLine("Digite sua matricula: ");
             string matricula = Console.ReadLine();
 
             Administrador admin = new Administrador();
-            for (int i = 0; i < admin.Funcionarios1.Count; i++)
+            
+            admin.CriaFuncionario();
+            
+            for (int i = 0; i < admin.Funcionarios.Count; i++)
             {
-                if (admin.Funcionarios1[i].Matricula == matricula)
+                if (admin.Funcionarios[i].Matricula == matricula)
                 {
-                    admin.Administracao(us);
+                    admin.Administracao();
                     break;
                 }
             }

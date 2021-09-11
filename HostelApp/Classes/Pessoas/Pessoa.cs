@@ -4,29 +4,21 @@ namespace HostelApp.Classes
 {
     public class Pessoa
     {
-        private string nome;
-        private Usuarios usuario;
+        private string _nome;
 
         public Pessoa()
         {
         }
 
-        public Pessoa(string nome, Usuarios usuario)
+        public Pessoa(string nome)
         {
-            this.nome = nome;
-            this.usuario = usuario;
+            this._nome = nome;
         }
         
         public string Nome
         {
-            get => nome;
-            set => nome = value;
-        }
-
-        public Usuarios Usuario
-        {
-            get => usuario;
-            set => usuario = value;
+            get => _nome;
+            set => _nome = value;
         }
     }
 }

@@ -2,22 +2,28 @@
 {
     public class Funcionario : Pessoa
     {
-        private string matricula;
-        private int id;
+        private string _matricula;
+        private int _id;
         public Funcionario()
         {
         }
 
-        public Funcionario(string nome, Usuarios us, string matricula, int id) : base (nome, us)
+        public Funcionario(string nome, string matricula, int id) : base (nome)
         {
-            this.matricula = matricula;
-            this.id = id;
+            this._matricula = matricula;
+            this._id = id;
+        }
+
+        public int Id
+        {
+            get => _id;
+            set => _id = value;
         }
 
         public string Matricula
         {
-            get => matricula;
-            set => matricula = value;
+            get => _matricula;
+            set => _matricula = value;
         }
     }
 }

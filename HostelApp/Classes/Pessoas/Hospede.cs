@@ -4,17 +4,17 @@ namespace HostelApp.Classes
 {
     public class Hospede : Pessoa
     {
-    private int numeroQuarto;
+    private int _numeroQuarto;
 
-    public Hospede(string nome, Usuarios us, int numeroQuarto) : base (nome, us)
+    public Hospede(string nome, Usuarios us, int numeroQuarto) : base (nome)
     {
-        this.numeroQuarto = numeroQuarto;
+        this._numeroQuarto = numeroQuarto;
     }
 
     public int NumeroQuarto
     {
-        get => numeroQuarto;
-        set => numeroQuarto = value;
+        get => _numeroQuarto;
+        set => _numeroQuarto = value;
     }
     }
 }
