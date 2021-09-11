@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 
@@ -7,11 +6,11 @@ namespace HostelApp.Database
 {
     public class EasyCSV
     {
-        public static void CriaCSV()
+        public static void CriaCSV(string nome)
         {
             try
             {
-                StreamWriter sw = new StreamWriter("../../../Database/csv.csv");
+                StreamWriter sw = new StreamWriter("../../../Database/" + nome);
                 sw.Close();
             }
             catch (Exception e)
@@ -24,18 +23,19 @@ namespace HostelApp.Database
             }
         }
 
-        public static void InsereCSV(string Content)
+        public static void InsereCSV(string Content, string nome)
         {
             List<string> aux = new List<string>();
-            aux = LeCSV();
+            aux = LeCSV(nome);
             try
             {
-                StreamWriter sw = new StreamWriter("../../../Database/csv.csv");
+                StreamWriter sw = new StreamWriter("../../../Database/" + nome);
 
                 for (int i = 0; i < aux.Count; i++)
                 {
                     sw.WriteLine(aux[i]);
                 }
+
                 sw.WriteLine(Content);
                 sw.Close();
             }
@@ -43,13 +43,9 @@ namespace HostelApp.Database
             {
                 Console.WriteLine("Exception: " + e.Message);
             }
-            finally
-            {
-                Console.WriteLine("Executing finally block.");
-            }
         }
 
-        public static List<string> LeCSV()
+        public static List<string> LeCSV(string nome)
         {
             string line;
             List<string> list = new List<string>();
@@ -57,7 +53,7 @@ namespace HostelApp.Database
 
             try
             {
-                StreamReader sr = new StreamReader("../../../Database/csv.csv");
+                StreamReader sr = new StreamReader("../../../Database/" + nome);
                 line = sr.ReadLine();
                 while (line != null)
                 {
@@ -72,20 +68,16 @@ namespace HostelApp.Database
             {
                 Console.WriteLine("Exception: " + e.Message);
             }
-            finally
-            {
-                Console.WriteLine("Executing finally block.");
-            }
 
             return list;
         }
 
-        public static void MostraCSV()
+        public static void MostraCSV(string nome)
         {
             String line;
             try
             {
-                StreamReader sr = new StreamReader("../../../Database/csv.csv");
+                StreamReader sr = new StreamReader("../../../Database/" + nome);
                 line = sr.ReadLine();
                 while (line != null)
                 {
@@ -98,10 +90,6 @@ namespace HostelApp.Database
             catch (Exception e)
             {
                 Console.WriteLine("Exception: " + e.Message);
-            }
-            finally
-            {
-                Console.WriteLine("Executing finally block.");
             }
         }
     }

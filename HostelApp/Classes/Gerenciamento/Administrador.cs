@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using HostelApp.Classes.Gerenciamento;
+using HostelApp.Database;
 
 namespace HostelApp.Classes
 {
@@ -67,6 +68,7 @@ namespace HostelApp.Classes
             double preco = Convert.ToDouble(Console.ReadLine());
 
             Quartos.Add(new Quartos(Quartos.Count + 1, descricao, preco, false));
+            EasyCSV.InsereCSV(Quartos[Quartos.Count + 1].ToString(), "reservas.csv");
         }
 
         public void CriaFuncionario()

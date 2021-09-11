@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using HostelApp.Classes.Gerenciamento;
 using HostelApp.Database;
 
@@ -23,13 +21,13 @@ namespace HostelApp.Classes
             set => _senha = value;
         }
 
-        public bool CheckUser(string usuario)
+        public bool CheckUser(string usuario, string nome)
         {
             string aux;
-            for (int i = 0; i < EasyCSV.LeCSV().Count; i++)
+            for (int i = 0; i < EasyCSV.LeCSV(nome).Count; i++)
             {
-                aux = EasyCSV.LeCSV()[i];
-                if (aux.Substring(0,aux.IndexOf(",", StringComparison.Ordinal)) == usuario)
+                aux = EasyCSV.LeCSV(nome)[i];
+                if (aux.Substring(0, aux.IndexOf(",", StringComparison.Ordinal)) == usuario)
                 {
                     return true;
                 }
@@ -38,16 +36,21 @@ namespace HostelApp.Classes
             return false;
         }
 
-        public bool LoginUser(string usuario, string senha)
+        public bool LoginUser(string usuario, string senha, string nome)
         {
             string aux;
-            for (int i = 0; i < EasyCSV.LeCSV().Count; i++)
+            string[] temp;
+            
+            for (int i = 0; i < EasyCSV.LeCSV(nome).Count; i++)
             {
-                aux = EasyCSV.LeCSV()[i];
-                if (aux.Substring(0,aux.IndexOf(",", StringComparison.Ordinal)) == usuario && aux.Substring(0,aux.LastIndexOf(",", StringComparison.Ordinal)) == senha)
+                aux = EasyCSV.LeCSV(nome)[i];
+                temp = aux.Split(",");
+                temp[1] = temp[1].Replace(" ", String.Empty);
+                if (temp[0].Equals(usuario) && temp[1].Equals(senha))
                 {
                     return true;
                 }
+
             }
 
             return false;

@@ -20,7 +20,7 @@ namespace HostelApp.Classes.Login
             switch (index)
             {
                 case 1: //Cadastro.
-                    if (us.CheckUser(usuario))
+                    if (us.CheckUser(usuario, "users.csv"))
                     {
                         Console.WriteLine("Usuário já existe.");
                         break;
@@ -29,13 +29,13 @@ namespace HostelApp.Classes.Login
                     us.Usuario = usuario;
                     us.Senha = senha;
                     
-                    EasyCSV.InsereCSV(usuario + ", " + senha);
+                    EasyCSV.InsereCSV(usuario + ", " + senha, "users.csv");
                     
                     us.IniciaSistema();
                     break;
 
                 case 0: //Login.
-                    if (us.LoginUser(usuario, senha))
+                    if (us.LoginUser(usuario, senha, "users.csv"))
                     {
                         us.IniciaSistema();
                         break;
