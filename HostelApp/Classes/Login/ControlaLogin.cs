@@ -1,4 +1,5 @@
 ﻿using System;
+using HostelApp.Database;
 
 namespace HostelApp.Classes.Login
 {
@@ -27,6 +28,8 @@ namespace HostelApp.Classes.Login
 
                     us.Usuario = usuario;
                     us.Senha = senha;
+                    
+                    EasyCSV.InsereCSV(usuario + "," + senha);
                     us.IniciaSistema(us);
                     break;
 

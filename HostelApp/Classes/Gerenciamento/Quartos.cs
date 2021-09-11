@@ -54,9 +54,9 @@ namespace HostelApp.Classes.Gerenciamento
         {
             Administrador admin = new Administrador();
             
-            for (int i = 0; i < admin.getQuartos.Count; i++)
+            for (int i = 1; i < admin.getQuartos.Count; i++)
             {
-                Console.WriteLine("\nQuarto: " + admin.getQuartos[i]);
+                Console.WriteLine("\nQuarto: " + admin.getQuartos[i]._descricao);
             }
             Console.WriteLine();
         }

@@ -43,6 +43,7 @@ namespace HostelApp.Classes
                                   "\n 2 - Área da Staff" +
                                   "\n 3 - Logout");
                 var opt = Convert.ToInt64(Console.ReadLine());
+                
                 switch (opt)
                 {
                     case 1:

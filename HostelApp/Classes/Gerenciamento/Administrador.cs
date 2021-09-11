@@ -22,6 +22,8 @@ namespace HostelApp.Classes
 
         public void Administracao()
         {
+            Quartos q = new Quartos();
+            q.RetornaQuartos();
             int opt = 0;
             while (opt != 5)
             {
@@ -32,7 +34,6 @@ namespace HostelApp.Classes
                                   "\n 5 - Voltar");
 
                 opt = Convert.ToInt32(Console.ReadLine());
-
                 switch (opt)
                 {
                     case 1:
