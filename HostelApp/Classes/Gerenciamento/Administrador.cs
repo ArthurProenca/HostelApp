@@ -125,6 +125,7 @@ namespace HostelApp.Classes
         public void Administracao(Administrador a)
         {
             int opt = 0;
+            int id;
             while (opt != 5)
             {
                 Console.WriteLine("\n 1 - Criar Quarto" +
@@ -133,7 +134,8 @@ namespace HostelApp.Classes
                                   "\n 4 - Deletar Funcionário" +
                                   "\n 5 - Listar Reservas" +
                                   "\n 6 - Listar Quartos" +
-                                  "\n 7 - Sair");
+                                  "\n 7 - Deletar reserva" +
+                                  "\n 8 - Sair");
 
                 opt = Convert.ToInt32(Console.ReadLine());
                 switch (opt)
@@ -146,13 +148,13 @@ namespace HostelApp.Classes
                         break;
                     case 3:
                         Console.WriteLine("Digite o ID do quarto a ser removido: ");
-                        int id = Convert.ToInt32(Console.ReadLine());
-                        DeletaQuarto(id);
+                        id = Convert.ToInt32(Console.ReadLine());
+                        DeletaQuarto(id, a);
                         break;
                     case 4:
                         Console.WriteLine("Digite o ID do funcionário a ser removido: ");
                         id = Convert.ToInt32(Console.ReadLine());
-                        DeletaFuncionarios(id);
+                        DeletaFuncionarios(id, a);
                         break;
                     case 5:
                         ListaReservas(a);
@@ -161,12 +163,45 @@ namespace HostelApp.Classes
                         ListaQuartos(a);
                         break;
                     case 7:
+                        Console.WriteLine("Digite o ID da reserva a ser removida: ");
+                        id = Convert.ToInt32(Console.ReadLine());
+                        DeletaReserva(id, a);
+                        break;
+                    case 8:
                         opt = 5;
                         break;
                 }
             }
         }
 
+        public void DeletaReserva(int id, Administrador a)
+        {
+            List<string> aux = EasyCSV.LeCSV("reservas.csv");
+            string[] temp;
+            if (id <= EasyCSV.LeCSV("reservas.csv").Count)
+            {
+                aux.RemoveAt(id);
+                EasyCSV.CriaCSV("reservas.csv");
+                for (int i = 0; i < aux.Count; i++)
+                {
+                    temp = aux[i].Split(",");
+                    temp[1] = temp[1].Replace(" ", String.Empty);
+                    temp[2] = temp[2].Replace(" ", String.Empty);
+                    temp[3] = temp[3].Replace(" ", String.Empty);
+                    temp[4] = temp[4].Replace(" ", String.Empty);
+                    temp[5] = temp[5].Replace(" ", String.Empty);
+                    EasyCSV.InsereCSV(temp[0] + temp[1] + temp[2] + temp[3] + temp[4] + temp[5],
+                        "reservas.csv");
+                }
+
+                a.setReservas();
+            }
+            else
+            {
+                Console.WriteLine("Não é possível remover esse funcionário.");
+            }
+        }
+        
         public void ListaReservas(Administrador a)
         {
             for (int i = 0; i < a.getReservas.Count; i++)
@@ -190,10 +225,9 @@ namespace HostelApp.Classes
             string descricao = Console.ReadLine();
             Console.WriteLine("Digite o preço do quarto: ");
             double preco = Convert.ToDouble(Console.ReadLine());
-            int id = Quartos.Count + 1;
-            EasyCSV.InsereCSV(id + ", " + descricao + ", " + preco + ", " + "false", "quartos.csv");
+            EasyCSV.InsereCSV((a.setQuartos().Count + 1) + ", " + descricao + ", " + preco + ", " + "false", "quartos.csv");
             
-            a.setQuartos.a(new Quartos(Quartos.Count + 1, descricao, preco, false));
+            a.setQuartos().Add(new Quartos(setQuartos().Count + 1, descricao, preco, false));
         }
 
         public void CriaFuncionario(Administrador a)
@@ -202,10 +236,12 @@ namespace HostelApp.Classes
             string nome = Console.ReadLine();
             Console.WriteLine("Digite a matrícula do funcionário: ");
             string matricula = Console.ReadLine();
+            
+            a.setFuncionarios().Add(new Funcionario(nome, matricula, a.setFuncionarios().Count + 1));
 
-            EasyCSV.InsereCSV(nome + ", " + matricula + ", " + Convert.ToInt32(Funcionarios.Count + 1), "staff.csv");
+            EasyCSV.InsereCSV(nome + ", " + matricula + ", " + Convert.ToInt32(a.setFuncionarios().Count + 1), "staff.csv");
 
-            a.Funcionarios.Add(new Funcionario(nome, matricula, Funcionarios.Count + 1));
+            
         }
 
         public bool CheckFuncionario(string matricula)
@@ -227,7 +263,7 @@ namespace HostelApp.Classes
             return false;
         }
 
-        public void DeletaQuarto(int id)
+        public void DeletaQuarto(int id, Administrador a)
         {
             List<string> aux = EasyCSV.LeCSV("quartos.csv");
             string[] temp;
@@ -244,7 +280,7 @@ namespace HostelApp.Classes
                     EasyCSV.InsereCSV((temp[0] + ", " + temp[1] + ", " + temp[2] + ", " + temp[3]), "quartos.csv");
                 }
 
-                setQuartos();
+                a.setQuartos();
             }
             else
             {
@@ -252,7 +288,7 @@ namespace HostelApp.Classes
             }
         }
 
-        public void DeletaFuncionarios(int id)
+        public void DeletaFuncionarios(int id, Administrador a)
         {
             List<string> aux = EasyCSV.LeCSV("staff.csv");
             string[] temp;
@@ -269,7 +305,7 @@ namespace HostelApp.Classes
                     EasyCSV.InsereCSV((temp[0] + ", " + temp[1] + ", " + temp[2]), "staff.csv");
                 }
 
-                setFuncionarios();
+                a.setFuncionarios();
             }
             else
             {
