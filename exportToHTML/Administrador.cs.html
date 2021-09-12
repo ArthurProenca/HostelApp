@@ -1,0 +1,306 @@
+<html>
+<head>
+<title>Administrador.cs</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<style type="text/css">
+.s0 { color: #6c95eb;}
+.s1 { color: #d0d0d0;}
+.s2 { color: #bdbdbd;}
+.s3 { color: #ed94c0;}
+.s4 { color: #c9a26d;}
+.s5 { color: #85c46c; font-style: italic;}
+</style>
+</head>
+<body bgcolor="#262626">
+<table CELLSPACING=0 CELLPADDING=5 COLS=1 WIDTH="100%" BGCOLOR="#606060" >
+<tr><td><center>
+<font face="Arial, Helvetica" color="#000000">
+Administrador.cs</font>
+</center></td></tr></table>
+<pre><span class="s0">using </span><span class="s1">System</span><span class="s2">;</span>
+<span class="s0">using </span><span class="s1">System</span><span class="s2">.</span><span class="s1">Collections</span><span class="s2">.</span><span class="s1">Generic</span><span class="s2">;</span>
+<span class="s0">using </span><span class="s1">System</span><span class="s2">.</span><span class="s1">IO</span><span class="s2">;</span>
+<span class="s0">using </span><span class="s1">System</span><span class="s2">.</span><span class="s1">Linq</span><span class="s2">;</span>
+<span class="s0">using </span><span class="s1">HostelApp</span><span class="s2">.</span><span class="s1">Classes</span><span class="s2">.</span><span class="s1">Gerenciamento</span><span class="s2">;</span>
+<span class="s0">using </span><span class="s1">HostelApp</span><span class="s2">.</span><span class="s1">Database</span><span class="s2">;</span>
+
+<span class="s0">namespace </span><span class="s1">HostelApp</span><span class="s2">.</span><span class="s1">Classes</span>
+<span class="s2">{</span>
+    <span class="s0">public class </span><span class="s1">Administrador</span>
+    <span class="s2">{</span>
+        <span class="s0">private string </span><span class="s1">_titulo</span><span class="s2">;</span>
+        <span class="s0">private </span><span class="s1">List</span><span class="s2">&lt;</span><span class="s1">Quartos</span><span class="s2">&gt; </span><span class="s1">Quartos </span><span class="s2">= </span><span class="s0">new </span><span class="s1">List</span><span class="s2">&lt;</span><span class="s1">Quartos</span><span class="s2">&gt;();</span>
+        <span class="s0">private </span><span class="s1">List</span><span class="s2">&lt;</span><span class="s1">Funcionario</span><span class="s2">&gt; </span><span class="s1">Funcionarios </span><span class="s2">= </span><span class="s0">new </span><span class="s1">List</span><span class="s2">&lt;</span><span class="s1">Funcionario</span><span class="s2">&gt;();</span>
+        <span class="s0">private </span><span class="s1">List</span><span class="s2">&lt;</span><span class="s1">Usuarios</span><span class="s2">&gt; </span><span class="s1">Usuarios </span><span class="s2">= </span><span class="s0">new </span><span class="s1">List</span><span class="s2">&lt;</span><span class="s1">Usuarios</span><span class="s2">&gt;();</span>
+        <span class="s0">private </span><span class="s1">List</span><span class="s2">&lt;</span><span class="s1">Reservas</span><span class="s2">&gt; </span><span class="s1">Reservas </span><span class="s2">= </span><span class="s0">new </span><span class="s1">List</span><span class="s2">&lt;</span><span class="s1">Reservas</span><span class="s2">&gt;();</span>
+
+        <span class="s0">public </span><span class="s1">List</span><span class="s2">&lt;</span><span class="s1">Quartos</span><span class="s2">&gt; </span><span class="s1">getQuartos =&gt; Quartos</span><span class="s2">;</span>
+
+        <span class="s0">public </span><span class="s1">List</span><span class="s2">&lt;</span><span class="s1">Funcionario</span><span class="s2">&gt; </span><span class="s1">getFuncionarios =&gt; Funcionarios</span><span class="s2">;</span>
+
+        <span class="s0">public </span><span class="s1">List</span><span class="s2">&lt;</span><span class="s1">Usuarios</span><span class="s2">&gt; </span><span class="s1">getUsuarios =&gt; Usuarios</span><span class="s2">;</span>
+
+        <span class="s0">public </span><span class="s1">List</span><span class="s2">&lt;</span><span class="s1">Reservas</span><span class="s2">&gt; </span><span class="s1">getReservas =&gt; Reservas</span><span class="s2">;</span>
+
+        <span class="s0">public string </span><span class="s1">Titulo</span>
+        <span class="s2">{</span>
+            <span class="s1">get =&gt; _titulo</span><span class="s2">;</span>
+            <span class="s1">set =&gt; _titulo </span><span class="s2">= </span><span class="s1">value</span><span class="s2">;</span>
+        <span class="s2">}</span>
+
+        <span class="s0">public void </span><span class="s1">setQuartos</span><span class="s2">()</span>
+        <span class="s2">{</span>
+            <span class="s0">string </span><span class="s1">aux</span><span class="s2">;</span>
+            <span class="s0">string</span><span class="s2">[] </span><span class="s1">temp</span><span class="s2">;</span>
+
+            <span class="s0">for </span><span class="s2">(</span><span class="s0">int </span><span class="s1">i </span><span class="s2">= </span><span class="s3">0</span><span class="s2">; </span><span class="s1">i </span><span class="s2">&lt; </span><span class="s1">EasyCSV</span><span class="s2">.</span><span class="s1">LeCSV</span><span class="s2">(</span><span class="s4">&quot;quartos.csv&quot;</span><span class="s2">).</span><span class="s1">Count</span><span class="s2">; </span><span class="s1">i</span><span class="s2">++)</span>
+            <span class="s2">{</span>
+                <span class="s1">aux </span><span class="s2">= </span><span class="s1">EasyCSV</span><span class="s2">.</span><span class="s1">LeCSV</span><span class="s2">(</span><span class="s4">&quot;quartos.csv&quot;</span><span class="s2">)[</span><span class="s1">i</span><span class="s2">];</span>
+                <span class="s1">temp </span><span class="s2">= </span><span class="s1">aux</span><span class="s2">.</span><span class="s1">Split</span><span class="s2">(</span><span class="s4">&quot;,&quot;</span><span class="s2">);</span>
+                <span class="s1">temp</span><span class="s2">[</span><span class="s3">1</span><span class="s2">] = </span><span class="s1">temp</span><span class="s2">[</span><span class="s3">1</span><span class="s2">].</span><span class="s1">Replace</span><span class="s2">(</span><span class="s4">&quot; &quot;</span><span class="s2">, </span><span class="s1">String</span><span class="s2">.</span><span class="s1">Empty</span><span class="s2">);</span>
+                <span class="s1">temp</span><span class="s2">[</span><span class="s3">2</span><span class="s2">] = </span><span class="s1">temp</span><span class="s2">[</span><span class="s3">2</span><span class="s2">].</span><span class="s1">Replace</span><span class="s2">(</span><span class="s4">&quot; &quot;</span><span class="s2">, </span><span class="s1">String</span><span class="s2">.</span><span class="s1">Empty</span><span class="s2">);</span>
+                <span class="s1">temp</span><span class="s2">[</span><span class="s3">3</span><span class="s2">] = </span><span class="s1">temp</span><span class="s2">[</span><span class="s3">3</span><span class="s2">].</span><span class="s1">Replace</span><span class="s2">(</span><span class="s4">&quot; &quot;</span><span class="s2">, </span><span class="s1">String</span><span class="s2">.</span><span class="s1">Empty</span><span class="s2">);</span>
+
+                <span class="s1">Quartos</span><span class="s2">.</span><span class="s1">Add</span><span class="s2">(</span><span class="s0">new </span><span class="s1">Quartos</span><span class="s2">(</span><span class="s1">Convert</span><span class="s2">.</span><span class="s1">ToInt32</span><span class="s2">(</span><span class="s1">temp</span><span class="s2">[</span><span class="s3">0</span><span class="s2">]), </span><span class="s1">temp</span><span class="s2">[</span><span class="s3">1</span><span class="s2">], </span><span class="s1">Convert</span><span class="s2">.</span><span class="s1">ToDouble</span><span class="s2">(</span><span class="s1">temp</span><span class="s2">[</span><span class="s3">2</span><span class="s2">]),</span>
+                    <span class="s1">Convert</span><span class="s2">.</span><span class="s1">ToBoolean</span><span class="s2">(</span><span class="s1">temp</span><span class="s2">[</span><span class="s3">3</span><span class="s2">])));</span>
+            <span class="s2">}</span>
+        <span class="s2">}</span>
+
+        <span class="s0">public void </span><span class="s1">setFuncionarios</span><span class="s2">()</span>
+        <span class="s2">{</span>
+            <span class="s0">string </span><span class="s1">aux</span><span class="s2">;</span>
+            <span class="s0">string</span><span class="s2">[] </span><span class="s1">temp</span><span class="s2">;</span>
+            <span class="s0">for </span><span class="s2">(</span><span class="s0">int </span><span class="s1">i </span><span class="s2">= </span><span class="s3">0</span><span class="s2">; </span><span class="s1">i </span><span class="s2">&lt; </span><span class="s1">EasyCSV</span><span class="s2">.</span><span class="s1">LeCSV</span><span class="s2">(</span><span class="s4">&quot;staff.csv&quot;</span><span class="s2">).</span><span class="s1">Count</span><span class="s2">; </span><span class="s1">i</span><span class="s2">++)</span>
+            <span class="s2">{</span>
+                <span class="s1">aux </span><span class="s2">= </span><span class="s1">EasyCSV</span><span class="s2">.</span><span class="s1">LeCSV</span><span class="s2">(</span><span class="s4">&quot;staff.csv&quot;</span><span class="s2">)[</span><span class="s1">i</span><span class="s2">];</span>
+                <span class="s1">temp </span><span class="s2">= </span><span class="s1">aux</span><span class="s2">.</span><span class="s1">Split</span><span class="s2">(</span><span class="s4">&quot;,&quot;</span><span class="s2">);</span>
+                <span class="s1">temp</span><span class="s2">[</span><span class="s3">1</span><span class="s2">] = </span><span class="s1">temp</span><span class="s2">[</span><span class="s3">1</span><span class="s2">].</span><span class="s1">Replace</span><span class="s2">(</span><span class="s4">&quot; &quot;</span><span class="s2">, </span><span class="s1">String</span><span class="s2">.</span><span class="s1">Empty</span><span class="s2">);</span>
+                <span class="s1">temp</span><span class="s2">[</span><span class="s3">2</span><span class="s2">] = </span><span class="s1">temp</span><span class="s2">[</span><span class="s3">2</span><span class="s2">].</span><span class="s1">Replace</span><span class="s2">(</span><span class="s4">&quot; &quot;</span><span class="s2">, </span><span class="s1">String</span><span class="s2">.</span><span class="s1">Empty</span><span class="s2">);</span>
+                <span class="s1">Funcionarios</span><span class="s2">.</span><span class="s1">Add</span><span class="s2">(</span><span class="s0">new </span><span class="s1">Funcionario</span><span class="s2">(</span><span class="s1">temp</span><span class="s2">[</span><span class="s3">0</span><span class="s2">], </span><span class="s1">temp</span><span class="s2">[</span><span class="s3">1</span><span class="s2">], </span><span class="s1">Convert</span><span class="s2">.</span><span class="s1">ToInt32</span><span class="s2">(</span><span class="s1">temp</span><span class="s2">[</span><span class="s3">2</span><span class="s2">])));</span>
+            <span class="s2">}</span>
+        <span class="s2">}</span>
+
+        <span class="s0">public void </span><span class="s1">setUsuarios</span><span class="s2">()</span>
+        <span class="s2">{</span>
+            <span class="s0">string </span><span class="s1">aux</span><span class="s2">;</span>
+            <span class="s0">string</span><span class="s2">[] </span><span class="s1">temp</span><span class="s2">;</span>
+            <span class="s0">for </span><span class="s2">(</span><span class="s0">int </span><span class="s1">i </span><span class="s2">= </span><span class="s3">0</span><span class="s2">; </span><span class="s1">i </span><span class="s2">&lt; </span><span class="s1">EasyCSV</span><span class="s2">.</span><span class="s1">LeCSV</span><span class="s2">(</span><span class="s4">&quot;users.csv&quot;</span><span class="s2">).</span><span class="s1">Count</span><span class="s2">; </span><span class="s1">i</span><span class="s2">++)</span>
+            <span class="s2">{</span>
+                <span class="s5">//arthur, 123</span>
+                <span class="s1">aux </span><span class="s2">= </span><span class="s1">EasyCSV</span><span class="s2">.</span><span class="s1">LeCSV</span><span class="s2">(</span><span class="s4">&quot;users.csv&quot;</span><span class="s2">)[</span><span class="s1">i</span><span class="s2">];</span>
+                <span class="s1">temp </span><span class="s2">= </span><span class="s1">aux</span><span class="s2">.</span><span class="s1">Split</span><span class="s2">(</span><span class="s4">&quot;,&quot;</span><span class="s2">);</span>
+                <span class="s1">temp</span><span class="s2">[</span><span class="s3">1</span><span class="s2">] = </span><span class="s1">temp</span><span class="s2">[</span><span class="s3">1</span><span class="s2">].</span><span class="s1">Replace</span><span class="s2">(</span><span class="s4">&quot; &quot;</span><span class="s2">, </span><span class="s1">String</span><span class="s2">.</span><span class="s1">Empty</span><span class="s2">);</span>
+                <span class="s1">Usuarios</span><span class="s2">.</span><span class="s1">Add</span><span class="s2">(</span><span class="s0">new </span><span class="s1">Usuarios</span><span class="s2">(</span><span class="s1">temp</span><span class="s2">[</span><span class="s3">0</span><span class="s2">], </span><span class="s1">temp</span><span class="s2">[</span><span class="s3">1</span><span class="s2">]));</span>
+            <span class="s2">}</span>
+        <span class="s2">}</span>
+
+        <span class="s0">public void </span><span class="s1">setReservas</span><span class="s2">()</span>
+        <span class="s2">{</span>
+            <span class="s0">string </span><span class="s1">aux</span><span class="s2">;</span>
+            <span class="s0">string</span><span class="s2">[] </span><span class="s1">temp</span><span class="s2">;</span>
+            <span class="s0">for </span><span class="s2">(</span><span class="s0">int </span><span class="s1">i </span><span class="s2">= </span><span class="s3">0</span><span class="s2">; </span><span class="s1">i </span><span class="s2">&lt; </span><span class="s1">EasyCSV</span><span class="s2">.</span><span class="s1">LeCSV</span><span class="s2">(</span><span class="s4">&quot;reservas.csv&quot;</span><span class="s2">).</span><span class="s1">Count</span><span class="s2">; </span><span class="s1">i</span><span class="s2">++)</span>
+            <span class="s2">{</span>
+                <span class="s1">aux </span><span class="s2">= </span><span class="s1">EasyCSV</span><span class="s2">.</span><span class="s1">LeCSV</span><span class="s2">(</span><span class="s4">&quot;reservas.csv&quot;</span><span class="s2">)[</span><span class="s1">i</span><span class="s2">];</span>
+                <span class="s1">temp </span><span class="s2">= </span><span class="s1">aux</span><span class="s2">.</span><span class="s1">Split</span><span class="s2">(</span><span class="s4">&quot;,&quot;</span><span class="s2">);</span>
+                <span class="s1">temp</span><span class="s2">[</span><span class="s3">1</span><span class="s2">] = </span><span class="s1">temp</span><span class="s2">[</span><span class="s3">1</span><span class="s2">].</span><span class="s1">Replace</span><span class="s2">(</span><span class="s4">&quot; &quot;</span><span class="s2">, </span><span class="s1">String</span><span class="s2">.</span><span class="s1">Empty</span><span class="s2">);</span>
+                <span class="s1">temp</span><span class="s2">[</span><span class="s3">2</span><span class="s2">] = </span><span class="s1">temp</span><span class="s2">[</span><span class="s3">2</span><span class="s2">].</span><span class="s1">Replace</span><span class="s2">(</span><span class="s4">&quot; &quot;</span><span class="s2">, </span><span class="s1">String</span><span class="s2">.</span><span class="s1">Empty</span><span class="s2">);</span>
+                <span class="s1">temp</span><span class="s2">[</span><span class="s3">3</span><span class="s2">] = </span><span class="s1">temp</span><span class="s2">[</span><span class="s3">3</span><span class="s2">].</span><span class="s1">Replace</span><span class="s2">(</span><span class="s4">&quot; &quot;</span><span class="s2">, </span><span class="s1">String</span><span class="s2">.</span><span class="s1">Empty</span><span class="s2">);</span>
+                <span class="s1">temp</span><span class="s2">[</span><span class="s3">4</span><span class="s2">] = </span><span class="s1">temp</span><span class="s2">[</span><span class="s3">4</span><span class="s2">].</span><span class="s1">Replace</span><span class="s2">(</span><span class="s4">&quot; &quot;</span><span class="s2">, </span><span class="s1">String</span><span class="s2">.</span><span class="s1">Empty</span><span class="s2">);</span>
+                <span class="s1">temp</span><span class="s2">[</span><span class="s3">5</span><span class="s2">] = </span><span class="s1">temp</span><span class="s2">[</span><span class="s3">5</span><span class="s2">].</span><span class="s1">Replace</span><span class="s2">(</span><span class="s4">&quot; &quot;</span><span class="s2">, </span><span class="s1">String</span><span class="s2">.</span><span class="s1">Empty</span><span class="s2">);</span>
+                <span class="s5">//id + &quot;, &quot; + id + &quot;, &quot; + dataEntrada + &quot;, &quot; + dataSaida + &quot;, &quot; + us.Usuario + &quot;, &quot; + us.Senha</span>
+                <span class="s1">Reservas</span><span class="s2">.</span><span class="s1">Add</span><span class="s2">(</span><span class="s0">new </span><span class="s1">Reservas</span><span class="s2">(</span><span class="s1">Convert</span><span class="s2">.</span><span class="s1">ToInt32</span><span class="s2">(</span><span class="s1">temp</span><span class="s2">[</span><span class="s3">0</span><span class="s2">]), </span><span class="s1">Convert</span><span class="s2">.</span><span class="s1">ToInt32</span><span class="s2">(</span><span class="s1">temp</span><span class="s2">[</span><span class="s3">1</span><span class="s2">]), </span><span class="s1">temp</span><span class="s2">[</span><span class="s3">2</span><span class="s2">], </span><span class="s1">temp</span><span class="s2">[</span><span class="s3">3</span><span class="s2">], </span><span class="s1">temp</span><span class="s2">[</span><span class="s3">4</span><span class="s2">],</span>
+                    <span class="s1">temp</span><span class="s2">[</span><span class="s3">5</span><span class="s2">]));</span>
+            <span class="s2">}</span>
+        <span class="s2">}</span>
+
+        <span class="s0">public void </span><span class="s1">DeletaReservas</span><span class="s2">(</span><span class="s0">int </span><span class="s1">id</span><span class="s2">)</span>
+        <span class="s2">{</span>
+            <span class="s1">List</span><span class="s2">&lt;</span><span class="s0">string</span><span class="s2">&gt; </span><span class="s1">aux </span><span class="s2">= </span><span class="s1">EasyCSV</span><span class="s2">.</span><span class="s1">LeCSV</span><span class="s2">(</span><span class="s4">&quot;reservas.csv&quot;</span><span class="s2">);</span>
+            <span class="s0">string</span><span class="s2">[] </span><span class="s1">temp</span><span class="s2">;</span>
+            <span class="s0">if </span><span class="s2">(</span><span class="s1">id </span><span class="s2">&lt;= </span><span class="s1">EasyCSV</span><span class="s2">.</span><span class="s1">LeCSV</span><span class="s2">(</span><span class="s4">&quot;reservas.csv&quot;</span><span class="s2">).</span><span class="s1">Count</span><span class="s2">)</span>
+            <span class="s2">{</span>
+                <span class="s1">aux</span><span class="s2">.</span><span class="s1">RemoveAt</span><span class="s2">(</span><span class="s1">id</span><span class="s2">);</span>
+                <span class="s1">EasyCSV</span><span class="s2">.</span><span class="s1">CriaCSV</span><span class="s2">(</span><span class="s4">&quot;reservas.csv&quot;</span><span class="s2">);</span>
+
+                <span class="s0">for </span><span class="s2">(</span><span class="s0">int </span><span class="s1">i </span><span class="s2">= </span><span class="s3">0</span><span class="s2">; </span><span class="s1">i </span><span class="s2">&lt; </span><span class="s1">aux</span><span class="s2">.</span><span class="s1">Count</span><span class="s2">; </span><span class="s1">i</span><span class="s2">++)</span>
+                <span class="s2">{</span>
+                    <span class="s1">temp </span><span class="s2">= </span><span class="s1">aux</span><span class="s2">[</span><span class="s1">i</span><span class="s2">].</span><span class="s1">Split</span><span class="s2">(</span><span class="s4">&quot;,&quot;</span><span class="s2">);</span>
+
+                    <span class="s1">temp</span><span class="s2">[</span><span class="s3">1</span><span class="s2">] = </span><span class="s1">temp</span><span class="s2">[</span><span class="s3">1</span><span class="s2">].</span><span class="s1">Replace</span><span class="s2">(</span><span class="s4">&quot; &quot;</span><span class="s2">, </span><span class="s1">String</span><span class="s2">.</span><span class="s1">Empty</span><span class="s2">);</span>
+                    <span class="s1">temp</span><span class="s2">[</span><span class="s3">2</span><span class="s2">] = </span><span class="s1">temp</span><span class="s2">[</span><span class="s3">2</span><span class="s2">].</span><span class="s1">Replace</span><span class="s2">(</span><span class="s4">&quot; &quot;</span><span class="s2">, </span><span class="s1">String</span><span class="s2">.</span><span class="s1">Empty</span><span class="s2">);</span>
+                    <span class="s1">temp</span><span class="s2">[</span><span class="s3">3</span><span class="s2">] = </span><span class="s1">temp</span><span class="s2">[</span><span class="s3">3</span><span class="s2">].</span><span class="s1">Replace</span><span class="s2">(</span><span class="s4">&quot; &quot;</span><span class="s2">, </span><span class="s1">String</span><span class="s2">.</span><span class="s1">Empty</span><span class="s2">);</span>
+                    <span class="s1">temp</span><span class="s2">[</span><span class="s3">4</span><span class="s2">] = </span><span class="s1">temp</span><span class="s2">[</span><span class="s3">4</span><span class="s2">].</span><span class="s1">Replace</span><span class="s2">(</span><span class="s4">&quot; &quot;</span><span class="s2">, </span><span class="s1">String</span><span class="s2">.</span><span class="s1">Empty</span><span class="s2">);</span>
+                    <span class="s1">temp</span><span class="s2">[</span><span class="s3">5</span><span class="s2">] = </span><span class="s1">temp</span><span class="s2">[</span><span class="s3">5</span><span class="s2">].</span><span class="s1">Replace</span><span class="s2">(</span><span class="s4">&quot; &quot;</span><span class="s2">, </span><span class="s1">String</span><span class="s2">.</span><span class="s1">Empty</span><span class="s2">);</span>
+
+                    <span class="s1">EasyCSV</span><span class="s2">.</span><span class="s1">InsereCSV</span><span class="s2">(</span>
+                        <span class="s1">temp</span><span class="s2">[</span><span class="s3">0</span><span class="s2">] + </span><span class="s4">&quot;, &quot; </span><span class="s2">+ </span><span class="s1">temp</span><span class="s2">[</span><span class="s3">1</span><span class="s2">] + </span><span class="s4">&quot;, &quot; </span><span class="s2">+ </span><span class="s1">temp</span><span class="s2">[</span><span class="s3">2</span><span class="s2">] + </span><span class="s4">&quot;, &quot; </span><span class="s2">+ </span><span class="s1">temp</span><span class="s2">[</span><span class="s3">3</span><span class="s2">] + </span><span class="s4">&quot;, &quot; </span><span class="s2">+ </span><span class="s1">temp</span><span class="s2">[</span><span class="s3">4</span><span class="s2">] + </span><span class="s4">&quot;, &quot; </span><span class="s2">+ </span><span class="s1">temp</span><span class="s2">[</span><span class="s3">5</span><span class="s2">],</span>
+                        <span class="s4">&quot;reservas.csv&quot;</span><span class="s2">);</span>
+                <span class="s2">}</span>
+
+                <span class="s1">setReservas</span><span class="s2">();</span>
+            <span class="s2">}</span>
+            <span class="s0">else</span>
+            <span class="s2">{</span>
+                <span class="s1">Console</span><span class="s2">.</span><span class="s1">WriteLine</span><span class="s2">(</span><span class="s4">&quot;Não é possível remover essa reserva.&quot;</span><span class="s2">);</span>
+            <span class="s2">}</span>
+        <span class="s2">}</span>
+
+        <span class="s0">public void </span><span class="s1">ListaReservas</span><span class="s2">()</span>
+        <span class="s2">{</span>
+            <span class="s1">Console</span><span class="s2">.</span><span class="s1">Clear</span><span class="s2">();</span>
+            <span class="s1">Console</span><span class="s2">.</span><span class="s1">WriteLine</span><span class="s2">(</span><span class="s4">&quot;Listando reservas: \n&quot; </span><span class="s2">+ </span><span class="s1">Reservas</span><span class="s2">.</span><span class="s1">Count </span><span class="s2">+ </span><span class="s1">Usuarios</span><span class="s2">.</span><span class="s1">Count</span><span class="s2">);</span>
+
+            <span class="s0">for </span><span class="s2">(</span><span class="s0">int </span><span class="s1">i </span><span class="s2">= </span><span class="s3">1</span><span class="s2">; </span><span class="s1">i </span><span class="s2">&lt; </span><span class="s3">5</span><span class="s2">; </span><span class="s1">i</span><span class="s2">++)</span>
+            <span class="s2">{</span>
+                <span class="s1">Console</span><span class="s2">.</span><span class="s1">WriteLine</span><span class="s2">(</span><span class="s4">&quot;Reserva &quot; </span><span class="s2">+ </span><span class="s1">i </span><span class="s2">+ </span><span class="s4">&quot; &quot; </span><span class="s2">+ </span><span class="s1">Reservas</span><span class="s2">[</span><span class="s1">i</span><span class="s2">].</span><span class="s1">Id </span><span class="s2">+ </span><span class="s1">Reservas</span><span class="s2">[</span><span class="s1">i</span><span class="s2">].</span><span class="s1">Usuario </span><span class="s2">+</span>
+                                  <span class="s4">&quot; &quot; </span><span class="s2">+ </span><span class="s1">Reservas</span><span class="s2">[</span><span class="s1">i</span><span class="s2">].</span><span class="s1">NQuarto </span><span class="s2">+ </span><span class="s4">&quot; &quot; </span><span class="s2">+ </span><span class="s1">Reservas</span><span class="s2">[</span><span class="s1">i</span><span class="s2">].</span><span class="s1">DataEntrada </span><span class="s2">+</span>
+                                  <span class="s4">&quot; &quot; </span><span class="s2">+ </span><span class="s1">Reservas</span><span class="s2">[</span><span class="s1">i</span><span class="s2">].</span><span class="s1">DataSaida</span><span class="s2">);</span>
+            <span class="s2">}</span>
+        <span class="s2">}</span>
+
+        <span class="s0">public void </span><span class="s1">Administracao</span><span class="s2">()</span>
+        <span class="s2">{</span>
+            <span class="s1">Quartos q </span><span class="s2">= </span><span class="s0">new </span><span class="s1">Quartos</span><span class="s2">();</span>
+            <span class="s1">Reservas r </span><span class="s2">= </span><span class="s0">new </span><span class="s1">Reservas</span><span class="s2">();</span>
+            <span class="s1">q</span><span class="s2">.</span><span class="s1">RetornaQuartos</span><span class="s2">();</span>
+            <span class="s0">int </span><span class="s1">opt </span><span class="s2">= </span><span class="s3">0</span><span class="s2">;</span>
+            <span class="s0">while </span><span class="s2">(</span><span class="s1">opt </span><span class="s2">!= </span><span class="s3">5</span><span class="s2">)</span>
+            <span class="s2">{</span>
+                <span class="s1">Console</span><span class="s2">.</span><span class="s1">WriteLine</span><span class="s2">(</span><span class="s4">&quot;\n 1 - Criar Quarto&quot; </span><span class="s2">+</span>
+                                  <span class="s4">&quot;\n 2 - Cadastro de Funcionário&quot; </span><span class="s2">+</span>
+                                  <span class="s4">&quot;\n 3 - Deletar Quarto&quot; </span><span class="s2">+</span>
+                                  <span class="s4">&quot;\n 4 - Deletar Funcionário&quot; </span><span class="s2">+</span>
+                                  <span class="s4">&quot;\n 5 - Deletar Reserva&quot; </span><span class="s2">+</span>
+                                  <span class="s4">&quot;\n 6 - Visualizar Reservas&quot; </span><span class="s2">+</span>
+                                  <span class="s4">&quot;\n 7 - Voltar&quot;</span><span class="s2">);</span>
+
+                <span class="s1">opt </span><span class="s2">= </span><span class="s1">Convert</span><span class="s2">.</span><span class="s1">ToInt32</span><span class="s2">(</span><span class="s1">Console</span><span class="s2">.</span><span class="s1">ReadLine</span><span class="s2">());</span>
+                <span class="s0">switch </span><span class="s2">(</span><span class="s1">opt</span><span class="s2">)</span>
+                <span class="s2">{</span>
+                    <span class="s0">case </span><span class="s3">1</span><span class="s1">:</span>
+                        <span class="s1">CriaQuarto</span><span class="s2">();</span>
+                        <span class="s0">break</span><span class="s2">;</span>
+                    <span class="s0">case </span><span class="s3">2</span><span class="s1">:</span>
+                        <span class="s1">CriaFuncionario</span><span class="s2">();</span>
+                        <span class="s0">break</span><span class="s2">;</span>
+                    <span class="s0">case </span><span class="s3">3</span><span class="s1">:</span>
+                        <span class="s1">Console</span><span class="s2">.</span><span class="s1">WriteLine</span><span class="s2">(</span><span class="s4">&quot;Digite o ID do quarto a ser removido: &quot;</span><span class="s2">);</span>
+                        <span class="s0">int </span><span class="s1">id </span><span class="s2">= </span><span class="s1">Convert</span><span class="s2">.</span><span class="s1">ToInt32</span><span class="s2">(</span><span class="s1">Console</span><span class="s2">.</span><span class="s1">ReadLine</span><span class="s2">());</span>
+                        <span class="s1">DeletaQuarto</span><span class="s2">(</span><span class="s1">id</span><span class="s2">);</span>
+                        <span class="s0">break</span><span class="s2">;</span>
+                    <span class="s0">case </span><span class="s3">4</span><span class="s1">:</span>
+                        <span class="s1">Console</span><span class="s2">.</span><span class="s1">WriteLine</span><span class="s2">(</span><span class="s4">&quot;Digite o ID do funcionário a ser removido: &quot;</span><span class="s2">);</span>
+                        <span class="s1">id </span><span class="s2">= </span><span class="s1">Convert</span><span class="s2">.</span><span class="s1">ToInt32</span><span class="s2">(</span><span class="s1">Console</span><span class="s2">.</span><span class="s1">ReadLine</span><span class="s2">());</span>
+                        <span class="s1">DeletaFuncionarios</span><span class="s2">(</span><span class="s1">id</span><span class="s2">);</span>
+                        <span class="s0">break</span><span class="s2">;</span>
+                    <span class="s0">case </span><span class="s3">5</span><span class="s1">:</span>
+                        <span class="s1">Console</span><span class="s2">.</span><span class="s1">WriteLine</span><span class="s2">(</span><span class="s4">&quot;Digite o ID da reserva a ser removida: &quot;</span><span class="s2">);</span>
+                        <span class="s1">id </span><span class="s2">= </span><span class="s1">Convert</span><span class="s2">.</span><span class="s1">ToInt32</span><span class="s2">(</span><span class="s1">Console</span><span class="s2">.</span><span class="s1">ReadLine</span><span class="s2">());</span>
+                        <span class="s1">DeletaReservas</span><span class="s2">(</span><span class="s1">id</span><span class="s2">);</span>
+                        <span class="s0">break</span><span class="s2">;</span>
+                    <span class="s0">case </span><span class="s3">6</span><span class="s1">:</span>
+                        <span class="s1">ListaReservas</span><span class="s2">();</span>
+                        <span class="s0">break</span><span class="s2">;</span>
+                    <span class="s0">case </span><span class="s3">7</span><span class="s1">:</span>
+                        <span class="s1">opt </span><span class="s2">= </span><span class="s3">5</span><span class="s2">;</span>
+                        <span class="s0">break</span><span class="s2">;</span>
+                <span class="s2">}</span>
+            <span class="s2">}</span>
+        <span class="s2">}</span>
+
+        <span class="s0">public void </span><span class="s1">CriaQuarto</span><span class="s2">()</span>
+        <span class="s2">{</span>
+            <span class="s1">Console</span><span class="s2">.</span><span class="s1">WriteLine</span><span class="s2">(</span><span class="s4">&quot;Digite a descrição do quarto: &quot;</span><span class="s2">);</span>
+            <span class="s0">string </span><span class="s1">descricao </span><span class="s2">= </span><span class="s1">Console</span><span class="s2">.</span><span class="s1">ReadLine</span><span class="s2">();</span>
+            <span class="s1">Console</span><span class="s2">.</span><span class="s1">WriteLine</span><span class="s2">(</span><span class="s4">&quot;Digite o preço do quarto: &quot;</span><span class="s2">);</span>
+            <span class="s0">double </span><span class="s1">preco </span><span class="s2">= </span><span class="s1">Convert</span><span class="s2">.</span><span class="s1">ToDouble</span><span class="s2">(</span><span class="s1">Console</span><span class="s2">.</span><span class="s1">ReadLine</span><span class="s2">());</span>
+            <span class="s0">int </span><span class="s1">id </span><span class="s2">= </span><span class="s1">Quartos</span><span class="s2">.</span><span class="s1">Count </span><span class="s2">+ </span><span class="s3">1</span><span class="s2">;</span>
+            <span class="s1">EasyCSV</span><span class="s2">.</span><span class="s1">InsereCSV</span><span class="s2">(</span><span class="s1">id </span><span class="s2">+ </span><span class="s4">&quot;, &quot; </span><span class="s2">+ </span><span class="s1">descricao </span><span class="s2">+ </span><span class="s4">&quot;, &quot; </span><span class="s2">+ </span><span class="s1">preco </span><span class="s2">+ </span><span class="s4">&quot;, &quot; </span><span class="s2">+ </span><span class="s4">&quot;false&quot;</span><span class="s2">, </span><span class="s4">&quot;quartos.csv&quot;</span><span class="s2">);</span>
+            <span class="s1">Quartos</span><span class="s2">.</span><span class="s1">Add</span><span class="s2">(</span><span class="s0">new </span><span class="s1">Quartos</span><span class="s2">(</span><span class="s1">Quartos</span><span class="s2">.</span><span class="s1">Count </span><span class="s2">+ </span><span class="s3">1</span><span class="s2">, </span><span class="s1">descricao</span><span class="s2">, </span><span class="s1">preco</span><span class="s2">, </span><span class="s0">false</span><span class="s2">));</span>
+        <span class="s2">}</span>
+
+        <span class="s0">public void </span><span class="s1">CriaFuncionario</span><span class="s2">()</span>
+        <span class="s2">{</span>
+            <span class="s1">Console</span><span class="s2">.</span><span class="s1">WriteLine</span><span class="s2">(</span><span class="s4">&quot;Digite o nome do funcionário: &quot;</span><span class="s2">);</span>
+            <span class="s0">string </span><span class="s1">nome </span><span class="s2">= </span><span class="s1">Console</span><span class="s2">.</span><span class="s1">ReadLine</span><span class="s2">();</span>
+            <span class="s1">Console</span><span class="s2">.</span><span class="s1">WriteLine</span><span class="s2">(</span><span class="s4">&quot;Digite a matrícula do funcionário: &quot;</span><span class="s2">);</span>
+            <span class="s0">string </span><span class="s1">matricula </span><span class="s2">= </span><span class="s1">Console</span><span class="s2">.</span><span class="s1">ReadLine</span><span class="s2">();</span>
+
+            <span class="s1">EasyCSV</span><span class="s2">.</span><span class="s1">InsereCSV</span><span class="s2">(</span><span class="s1">nome </span><span class="s2">+ </span><span class="s4">&quot;, &quot; </span><span class="s2">+ </span><span class="s1">matricula </span><span class="s2">+ </span><span class="s4">&quot;, &quot; </span><span class="s2">+ </span><span class="s1">Convert</span><span class="s2">.</span><span class="s1">ToInt32</span><span class="s2">(</span><span class="s1">Funcionarios</span><span class="s2">.</span><span class="s1">Count </span><span class="s2">+ </span><span class="s3">1</span><span class="s2">), </span><span class="s4">&quot;staff.csv&quot;</span><span class="s2">);</span>
+
+            <span class="s1">Funcionarios</span><span class="s2">.</span><span class="s1">Add</span><span class="s2">(</span><span class="s0">new </span><span class="s1">Funcionario</span><span class="s2">(</span><span class="s1">nome</span><span class="s2">, </span><span class="s1">matricula</span><span class="s2">, </span><span class="s1">Funcionarios</span><span class="s2">.</span><span class="s1">Count </span><span class="s2">+ </span><span class="s3">1</span><span class="s2">));</span>
+        <span class="s2">}</span>
+
+        <span class="s0">public bool </span><span class="s1">CheckFuncionario</span><span class="s2">(</span><span class="s0">string </span><span class="s1">matricula</span><span class="s2">)</span>
+        <span class="s2">{</span>
+            <span class="s0">string </span><span class="s1">aux</span><span class="s2">;</span>
+            <span class="s0">string</span><span class="s2">[] </span><span class="s1">temp</span><span class="s2">;</span>
+
+            <span class="s0">for </span><span class="s2">(</span><span class="s0">int </span><span class="s1">i </span><span class="s2">= </span><span class="s3">0</span><span class="s2">; </span><span class="s1">i </span><span class="s2">&lt; </span><span class="s1">EasyCSV</span><span class="s2">.</span><span class="s1">LeCSV</span><span class="s2">(</span><span class="s4">&quot;staff.csv&quot;</span><span class="s2">).</span><span class="s1">Count</span><span class="s2">; </span><span class="s1">i</span><span class="s2">++)</span>
+            <span class="s2">{</span>
+                <span class="s1">aux </span><span class="s2">= </span><span class="s1">EasyCSV</span><span class="s2">.</span><span class="s1">LeCSV</span><span class="s2">(</span><span class="s4">&quot;staff.csv&quot;</span><span class="s2">)[</span><span class="s1">i</span><span class="s2">];</span>
+                <span class="s1">temp </span><span class="s2">= </span><span class="s1">aux</span><span class="s2">.</span><span class="s1">Split</span><span class="s2">(</span><span class="s4">&quot;,&quot;</span><span class="s2">);</span>
+                <span class="s1">temp</span><span class="s2">[</span><span class="s3">1</span><span class="s2">] = </span><span class="s1">temp</span><span class="s2">[</span><span class="s3">1</span><span class="s2">].</span><span class="s1">Replace</span><span class="s2">(</span><span class="s4">&quot; &quot;</span><span class="s2">, </span><span class="s1">String</span><span class="s2">.</span><span class="s1">Empty</span><span class="s2">);</span>
+                <span class="s0">if </span><span class="s2">(</span><span class="s1">temp</span><span class="s2">[</span><span class="s3">1</span><span class="s2">].</span><span class="s1">Equals</span><span class="s2">(</span><span class="s1">matricula</span><span class="s2">))</span>
+                <span class="s2">{</span>
+                    <span class="s0">return true</span><span class="s2">;</span>
+                <span class="s2">}</span>
+            <span class="s2">}</span>
+
+            <span class="s0">return false</span><span class="s2">;</span>
+        <span class="s2">}</span>
+
+        <span class="s0">public void </span><span class="s1">DeletaQuarto</span><span class="s2">(</span><span class="s0">int </span><span class="s1">id</span><span class="s2">)</span>
+        <span class="s2">{</span>
+            <span class="s1">List</span><span class="s2">&lt;</span><span class="s0">string</span><span class="s2">&gt; </span><span class="s1">aux </span><span class="s2">= </span><span class="s1">EasyCSV</span><span class="s2">.</span><span class="s1">LeCSV</span><span class="s2">(</span><span class="s4">&quot;quartos.csv&quot;</span><span class="s2">);</span>
+            <span class="s0">string</span><span class="s2">[] </span><span class="s1">temp</span><span class="s2">;</span>
+            <span class="s0">if </span><span class="s2">(</span><span class="s1">id </span><span class="s2">&lt;= </span><span class="s1">EasyCSV</span><span class="s2">.</span><span class="s1">LeCSV</span><span class="s2">(</span><span class="s4">&quot;quartos.csv&quot;</span><span class="s2">).</span><span class="s1">Count</span><span class="s2">)</span>
+            <span class="s2">{</span>
+                <span class="s1">aux</span><span class="s2">.</span><span class="s1">RemoveAt</span><span class="s2">(</span><span class="s1">id</span><span class="s2">);</span>
+                <span class="s1">EasyCSV</span><span class="s2">.</span><span class="s1">CriaCSV</span><span class="s2">(</span><span class="s4">&quot;quartos.csv&quot;</span><span class="s2">);</span>
+                <span class="s0">for </span><span class="s2">(</span><span class="s0">int </span><span class="s1">i </span><span class="s2">= </span><span class="s3">0</span><span class="s2">; </span><span class="s1">i </span><span class="s2">&lt; </span><span class="s1">aux</span><span class="s2">.</span><span class="s1">Count</span><span class="s2">; </span><span class="s1">i</span><span class="s2">++)</span>
+                <span class="s2">{</span>
+                    <span class="s1">temp </span><span class="s2">= </span><span class="s1">aux</span><span class="s2">[</span><span class="s1">i</span><span class="s2">].</span><span class="s1">Split</span><span class="s2">(</span><span class="s4">&quot;,&quot;</span><span class="s2">);</span>
+                    <span class="s1">temp</span><span class="s2">[</span><span class="s3">1</span><span class="s2">] = </span><span class="s1">temp</span><span class="s2">[</span><span class="s3">1</span><span class="s2">].</span><span class="s1">Replace</span><span class="s2">(</span><span class="s4">&quot; &quot;</span><span class="s2">, </span><span class="s1">String</span><span class="s2">.</span><span class="s1">Empty</span><span class="s2">);</span>
+                    <span class="s1">temp</span><span class="s2">[</span><span class="s3">2</span><span class="s2">] = </span><span class="s1">temp</span><span class="s2">[</span><span class="s3">2</span><span class="s2">].</span><span class="s1">Replace</span><span class="s2">(</span><span class="s4">&quot; &quot;</span><span class="s2">, </span><span class="s1">String</span><span class="s2">.</span><span class="s1">Empty</span><span class="s2">);</span>
+                    <span class="s1">temp</span><span class="s2">[</span><span class="s3">3</span><span class="s2">] = </span><span class="s1">temp</span><span class="s2">[</span><span class="s3">3</span><span class="s2">].</span><span class="s1">Replace</span><span class="s2">(</span><span class="s4">&quot; &quot;</span><span class="s2">, </span><span class="s1">String</span><span class="s2">.</span><span class="s1">Empty</span><span class="s2">);</span>
+                    <span class="s1">EasyCSV</span><span class="s2">.</span><span class="s1">InsereCSV</span><span class="s2">((</span><span class="s1">temp</span><span class="s2">[</span><span class="s3">0</span><span class="s2">] + </span><span class="s4">&quot;, &quot; </span><span class="s2">+ </span><span class="s1">temp</span><span class="s2">[</span><span class="s3">1</span><span class="s2">] + </span><span class="s4">&quot;, &quot; </span><span class="s2">+ </span><span class="s1">temp</span><span class="s2">[</span><span class="s3">2</span><span class="s2">] + </span><span class="s4">&quot;, &quot; </span><span class="s2">+ </span><span class="s1">temp</span><span class="s2">[</span><span class="s3">3</span><span class="s2">]), </span><span class="s4">&quot;quartos.csv&quot;</span><span class="s2">);</span>
+                <span class="s2">}</span>
+
+                <span class="s1">setQuartos</span><span class="s2">();</span>
+            <span class="s2">}</span>
+            <span class="s0">else</span>
+            <span class="s2">{</span>
+                <span class="s1">Console</span><span class="s2">.</span><span class="s1">WriteLine</span><span class="s2">(</span><span class="s4">&quot;Não é possível remover esse quarto.&quot;</span><span class="s2">);</span>
+            <span class="s2">}</span>
+        <span class="s2">}</span>
+
+        <span class="s0">public void </span><span class="s1">DeletaFuncionarios</span><span class="s2">(</span><span class="s0">int </span><span class="s1">id</span><span class="s2">)</span>
+        <span class="s2">{</span>
+            <span class="s1">List</span><span class="s2">&lt;</span><span class="s0">string</span><span class="s2">&gt; </span><span class="s1">aux </span><span class="s2">= </span><span class="s1">EasyCSV</span><span class="s2">.</span><span class="s1">LeCSV</span><span class="s2">(</span><span class="s4">&quot;staff.csv&quot;</span><span class="s2">);</span>
+            <span class="s0">string</span><span class="s2">[] </span><span class="s1">temp</span><span class="s2">;</span>
+            <span class="s0">if </span><span class="s2">(</span><span class="s1">id </span><span class="s2">&lt;= </span><span class="s1">EasyCSV</span><span class="s2">.</span><span class="s1">LeCSV</span><span class="s2">(</span><span class="s4">&quot;staff.csv&quot;</span><span class="s2">).</span><span class="s1">Count</span><span class="s2">)</span>
+            <span class="s2">{</span>
+                <span class="s1">Console</span><span class="s2">.</span><span class="s1">WriteLine</span><span class="s2">(</span><span class="s1">aux</span><span class="s2">[</span><span class="s3">0</span><span class="s2">]);</span>
+                <span class="s1">aux</span><span class="s2">.</span><span class="s1">RemoveAt</span><span class="s2">(</span><span class="s1">id</span><span class="s2">);</span>
+                <span class="s1">EasyCSV</span><span class="s2">.</span><span class="s1">CriaCSV</span><span class="s2">(</span><span class="s4">&quot;staff.csv&quot;</span><span class="s2">);</span>
+                <span class="s0">for </span><span class="s2">(</span><span class="s0">int </span><span class="s1">i </span><span class="s2">= </span><span class="s3">0</span><span class="s2">; </span><span class="s1">i </span><span class="s2">&lt; </span><span class="s1">aux</span><span class="s2">.</span><span class="s1">Count</span><span class="s2">; </span><span class="s1">i</span><span class="s2">++)</span>
+                <span class="s2">{</span>
+                    <span class="s1">temp </span><span class="s2">= </span><span class="s1">aux</span><span class="s2">[</span><span class="s1">i</span><span class="s2">].</span><span class="s1">Split</span><span class="s2">(</span><span class="s4">&quot;,&quot;</span><span class="s2">);</span>
+                    <span class="s1">temp</span><span class="s2">[</span><span class="s3">1</span><span class="s2">] = </span><span class="s1">temp</span><span class="s2">[</span><span class="s3">1</span><span class="s2">].</span><span class="s1">Replace</span><span class="s2">(</span><span class="s4">&quot; &quot;</span><span class="s2">, </span><span class="s1">String</span><span class="s2">.</span><span class="s1">Empty</span><span class="s2">);</span>
+                    <span class="s1">temp</span><span class="s2">[</span><span class="s3">2</span><span class="s2">] = </span><span class="s1">temp</span><span class="s2">[</span><span class="s3">2</span><span class="s2">].</span><span class="s1">Replace</span><span class="s2">(</span><span class="s4">&quot; &quot;</span><span class="s2">, </span><span class="s1">String</span><span class="s2">.</span><span class="s1">Empty</span><span class="s2">);</span>
+                    <span class="s1">EasyCSV</span><span class="s2">.</span><span class="s1">InsereCSV</span><span class="s2">((</span><span class="s1">temp</span><span class="s2">[</span><span class="s3">0</span><span class="s2">] + </span><span class="s4">&quot;, &quot; </span><span class="s2">+ </span><span class="s1">temp</span><span class="s2">[</span><span class="s3">1</span><span class="s2">] + </span><span class="s4">&quot;, &quot; </span><span class="s2">+ </span><span class="s1">temp</span><span class="s2">[</span><span class="s3">2</span><span class="s2">]), </span><span class="s4">&quot;staff.csv&quot;</span><span class="s2">);</span>
+                <span class="s2">}</span>
+
+                <span class="s1">setFuncionarios</span><span class="s2">();</span>
+            <span class="s2">}</span>
+            <span class="s0">else</span>
+            <span class="s2">{</span>
+                <span class="s1">Console</span><span class="s2">.</span><span class="s1">WriteLine</span><span class="s2">(</span><span class="s4">&quot;Não é possível remover esse funcionário.&quot;</span><span class="s2">);</span>
+            <span class="s2">}</span>
+        <span class="s2">}</span>
+
+    <span class="s2">}</span>
+<span class="s2">}</span></pre>
+</body>
+</html>

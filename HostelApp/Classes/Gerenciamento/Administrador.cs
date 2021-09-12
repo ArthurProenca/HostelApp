@@ -10,14 +10,18 @@ namespace HostelApp.Classes
     public class Administrador
     {
         private string _titulo;
-        private List<Quartos> Quartos = new List<Quartos>();
-        private List<Funcionario> Funcionarios = new List<Funcionario>();
-        private List<Usuarios> Usuarios = new List<Usuarios>();
-        private List<Reservas> Reservas = new List<Reservas>();
+        private List<Quartos> Quartos;
+        private List<Funcionario> Funcionarios;
+        private List<Usuarios> Usuarios;
+        private List<Reservas> Reservas;
 
         public List<Quartos> getQuartos => Quartos;
 
         public List<Funcionario> getFuncionarios => Funcionarios;
+
+        public List<Reservas> getReservas => Reservas;
+
+        public List<Usuarios> getUsuarios => Usuarios;
 
         public string Titulo
         {
@@ -25,11 +29,24 @@ namespace HostelApp.Classes
             set => _titulo = value;
         }
 
-        public void setQuartos()
+        public Administrador()
+        {
+        }
+
+        public Administrador(List<Quartos> quartos, List<Funcionario> funcionarios, List<Usuarios> usuarios,
+            List<Reservas> reservas)
+        {
+            Quartos = quartos;
+            Funcionarios = funcionarios;
+            Usuarios = usuarios;
+            Reservas = reservas;
+        }
+
+        public List<Quartos> setQuartos()
         {
             string aux;
             string[] temp;
-
+            List<Quartos> x = new List<Quartos>();
             for (int i = 0; i < EasyCSV.LeCSV("quartos.csv").Count; i++)
             {
                 aux = EasyCSV.LeCSV("quartos.csv")[i];
@@ -38,43 +55,55 @@ namespace HostelApp.Classes
                 temp[2] = temp[2].Replace(" ", String.Empty);
                 temp[3] = temp[3].Replace(" ", String.Empty);
 
-                Quartos.Add(new Quartos(Convert.ToInt32(temp[0]), temp[1], Convert.ToDouble(temp[2]),
+                x.Add(new Quartos(Convert.ToInt32(temp[0]), temp[1], Convert.ToDouble(temp[2]),
                     Convert.ToBoolean(temp[3])));
             }
+
+            Quartos = new List<Quartos>(x);
+            return Quartos;
         }
 
-        public void setFuncionarios()
+        public List<Funcionario> setFuncionarios()
         {
             string aux;
             string[] temp;
+            List<Funcionario> x = new List<Funcionario>();
             for (int i = 0; i < EasyCSV.LeCSV("staff.csv").Count; i++)
             {
                 aux = EasyCSV.LeCSV("staff.csv")[i];
                 temp = aux.Split(",");
                 temp[1] = temp[1].Replace(" ", String.Empty);
                 temp[2] = temp[2].Replace(" ", String.Empty);
-                Funcionarios.Add(new Funcionario(temp[0], temp[1], Convert.ToInt32(temp[2])));
+                x.Add(new Funcionario(temp[0], temp[1], Convert.ToInt32(temp[2])));
             }
+
+            Funcionarios = new List<Funcionario>(x);
+            return Funcionarios;
         }
 
-        public void setUsuarios()
+        public List<Usuarios> setUsuarios()
         {
             string aux;
             string[] temp;
+            List<Usuarios> x = new List<Usuarios>();
             for (int i = 0; i < EasyCSV.LeCSV("users.csv").Count; i++)
             {
                 //arthur, 123
                 aux = EasyCSV.LeCSV("users.csv")[i];
                 temp = aux.Split(",");
                 temp[1] = temp[1].Replace(" ", String.Empty);
-                Usuarios.Add(new Usuarios(temp[0], temp[1]));
+                x.Add(new Usuarios(temp[0], temp[1]));
             }
+
+            Usuarios = new List<Usuarios>(x);
+            return Usuarios;
         }
-        
-        public void setReservas()
+
+        public List<Reservas> setReservas()
         {
             string aux;
             string[] temp;
+            List<Reservas> x = new List<Reservas>();
             for (int i = 0; i < EasyCSV.LeCSV("reservas.csv").Count; i++)
             {
                 aux = EasyCSV.LeCSV("reservas.csv")[i];
@@ -85,14 +114,16 @@ namespace HostelApp.Classes
                 temp[4] = temp[4].Replace(" ", String.Empty);
                 temp[5] = temp[5].Replace(" ", String.Empty);
                 //id + ", " + id + ", " + dataEntrada + ", " + dataSaida + ", " + us.Usuario + ", " + us.Senha
-                Reservas.Add(new Reservas(Convert.ToInt32(temp[0]), Convert.ToInt32(temp[1]), temp[2], temp[3], temp[4], temp[5] ));
+                x.Add(new Reservas(Convert.ToInt32(temp[0]), Convert.ToInt32(temp[1]), temp[2], temp[3], temp[4],
+                    temp[5]));
             }
+
+            Reservas = new List<Reservas>(x);
+            return Reservas;
         }
 
-        public void Administracao()
+        public void Administracao(Administrador a)
         {
-            Quartos q = new Quartos();
-            q.RetornaQuartos();
             int opt = 0;
             while (opt != 5)
             {
@@ -100,16 +131,18 @@ namespace HostelApp.Classes
                                   "\n 2 - Cadastro de Funcionário" +
                                   "\n 3 - Deletar Quarto" +
                                   "\n 4 - Deletar Funcionário" +
-                                  "\n 5 - Voltar");
+                                  "\n 5 - Listar Reservas" +
+                                  "\n 6 - Listar Quartos" +
+                                  "\n 7 - Sair");
 
                 opt = Convert.ToInt32(Console.ReadLine());
                 switch (opt)
                 {
                     case 1:
-                        CriaQuarto();
+                        CriaQuarto(a);
                         break;
                     case 2:
-                        CriaFuncionario();
+                        CriaFuncionario(a);
                         break;
                     case 3:
                         Console.WriteLine("Digite o ID do quarto a ser removido: ");
@@ -122,24 +155,48 @@ namespace HostelApp.Classes
                         DeletaFuncionarios(id);
                         break;
                     case 5:
+                        ListaReservas(a);
+                        break;
+                    case 6:
+                        ListaQuartos(a);
+                        break;
+                    case 7:
                         opt = 5;
                         break;
                 }
             }
         }
 
-        public void CriaQuarto()
+        public void ListaReservas(Administrador a)
         {
+            for (int i = 0; i < a.getReservas.Count; i++)
+            {
+                Console.WriteLine(a.getReservas[i].Id + " " + a.getReservas[i].NQuarto + " " + a.getReservas[i].DataEntrada + " " + a.getReservas[i].DataSaida);
+            }
+        }
+
+        public void ListaQuartos(Administrador a)
+        {
+            for (int i = 0; i < a.getQuartos.Count; i++)
+            {
+                Console.WriteLine(a.getQuartos[i].Id + " " + a.getQuartos[i].Descricao + " " + a.getQuartos[i].Status);
+            }
+        }
+
+        public void CriaQuarto(Administrador a)
+        {
+            List<Quartos> x = new List<Quartos>();
             Console.WriteLine("Digite a descrição do quarto: ");
             string descricao = Console.ReadLine();
             Console.WriteLine("Digite o preço do quarto: ");
             double preco = Convert.ToDouble(Console.ReadLine());
             int id = Quartos.Count + 1;
             EasyCSV.InsereCSV(id + ", " + descricao + ", " + preco + ", " + "false", "quartos.csv");
-            Quartos.Add(new Quartos(Quartos.Count + 1, descricao, preco, false));
+            
+            a.setQuartos.a(new Quartos(Quartos.Count + 1, descricao, preco, false));
         }
 
-        public void CriaFuncionario()
+        public void CriaFuncionario(Administrador a)
         {
             Console.WriteLine("Digite o nome do funcionário: ");
             string nome = Console.ReadLine();
@@ -148,7 +205,7 @@ namespace HostelApp.Classes
 
             EasyCSV.InsereCSV(nome + ", " + matricula + ", " + Convert.ToInt32(Funcionarios.Count + 1), "staff.csv");
 
-            Funcionarios.Add(new Funcionario(nome, matricula, Funcionarios.Count + 1));
+            a.Funcionarios.Add(new Funcionario(nome, matricula, Funcionarios.Count + 1));
         }
 
         public bool CheckFuncionario(string matricula)

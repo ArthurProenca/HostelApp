@@ -66,7 +66,7 @@ namespace HostelApp.Classes
             return false;
         }
 
-        public void IniciaSistema(Usuarios us)
+        public void IniciaSistema(Usuarios us, Administrador a)
         {
             Console.Clear();
             int aux = 0;
@@ -84,20 +84,20 @@ namespace HostelApp.Classes
                 switch (opt)
                 {
                     case 1:
-                        if (c.CriaReserva(us))
+                        if (c.CriaReserva(us, a))
                         {
                             Console.WriteLine("Reserva criada com sucesso.");
                             break;
                         }
 
-                        if (!c.CriaReserva(us))
+                        if (!c.CriaReserva(us, a))
                         {
                             Console.WriteLine("Falha na criação de reserva.");
                         }
 
                         break;
                     case 2:
-                        c.AreaStaff();
+                        c.AreaStaff(a);
                         break;
                     case 3:
                         aux = 1;

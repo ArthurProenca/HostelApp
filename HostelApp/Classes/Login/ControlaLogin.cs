@@ -5,7 +5,7 @@ namespace HostelApp.Classes.Login
 {
     public class ControlaLogin
     {
-        public static void Cadastro(int index)
+        public static void Cadastro(int index, Administrador a)
         {
             Usuarios us = new Usuarios();
             Pessoa p = new Pessoa();
@@ -32,7 +32,7 @@ namespace HostelApp.Classes.Login
                         EasyCSV.InsereCSV(usuario + ", " + senha, "users.csv");
                         us.Senha = senha;
                         us.Usuario = usuario;
-                        us.IniciaSistema(us);
+                        us.IniciaSistema(us, a);
                         break;
                     }
 
@@ -41,7 +41,7 @@ namespace HostelApp.Classes.Login
                     {
                         us.Senha = senha;
                         us.Usuario = usuario;
-                        us.IniciaSistema(us);
+                        us.IniciaSistema(us, a);
                         break;
                     }
 
@@ -50,7 +50,7 @@ namespace HostelApp.Classes.Login
             }
         }
 
-        public void CriaTela()
+        public void CriaTela(Administrador a)
         {
             int aux = 10;
             while (aux != 0)
@@ -67,10 +67,10 @@ namespace HostelApp.Classes.Login
                 switch (opt)
                 {
                     case 1:
-                        Cadastro(1);
+                        Cadastro(1, a);
                         break;
                     case 2:
-                        Cadastro(0);
+                        Cadastro(0, a);
                         break;
                     case 3:
                         aux = 0;

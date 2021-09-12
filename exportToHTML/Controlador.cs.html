@@ -1,0 +1,78 @@
+<html>
+<head>
+<title>Controlador.cs</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<style type="text/css">
+.s0 { color: #6c95eb;}
+.s1 { color: #d0d0d0;}
+.s2 { color: #bdbdbd;}
+.s3 { color: #c9a26d;}
+</style>
+</head>
+<body bgcolor="#262626">
+<table CELLSPACING=0 CELLPADDING=5 COLS=1 WIDTH="100%" BGCOLOR="#606060" >
+<tr><td><center>
+<font face="Arial, Helvetica" color="#000000">
+Controlador.cs</font>
+</center></td></tr></table>
+<pre><span class="s0">using </span><span class="s1">System</span><span class="s2">;</span>
+<span class="s0">using </span><span class="s1">HostelApp</span><span class="s2">.</span><span class="s1">Database</span><span class="s2">;</span>
+
+<span class="s0">namespace </span><span class="s1">HostelApp</span><span class="s2">.</span><span class="s1">Classes</span><span class="s2">.</span><span class="s1">Gerenciamento</span>
+<span class="s2">{</span>
+    <span class="s0">public class </span><span class="s1">Controlador</span>
+    <span class="s2">{</span>
+
+        <span class="s0">public bool </span><span class="s1">CriaReserva</span><span class="s2">(</span><span class="s1">Usuarios us</span><span class="s2">)</span>
+        <span class="s2">{</span>
+            <span class="s1">Console</span><span class="s2">.</span><span class="s1">WriteLine</span><span class="s2">(</span><span class="s1">us</span><span class="s2">.</span><span class="s1">Usuario</span><span class="s2">);</span>
+            <span class="s0">int </span><span class="s1">id</span><span class="s2">;</span>
+            <span class="s1">Console</span><span class="s2">.</span><span class="s1">WriteLine</span><span class="s2">(</span><span class="s3">&quot;Digite o ID do quarto: &quot;</span><span class="s2">);</span>
+            <span class="s1">id </span><span class="s2">= </span><span class="s1">Convert</span><span class="s2">.</span><span class="s1">ToInt32</span><span class="s2">(</span><span class="s1">Console</span><span class="s2">.</span><span class="s1">ReadLine</span><span class="s2">());</span>
+
+            <span class="s0">if </span><span class="s2">(</span><span class="s1">VerificaReserva</span><span class="s2">(</span><span class="s1">id</span><span class="s2">))</span>
+            <span class="s2">{</span>
+                <span class="s1">Console</span><span class="s2">.</span><span class="s1">WriteLine</span><span class="s2">(</span><span class="s3">&quot;O quarto &quot; </span><span class="s2">+ </span><span class="s1">id </span><span class="s2">+ </span><span class="s3">&quot; pode ser reservado.&quot;</span><span class="s2">);</span>
+                <span class="s1">Console</span><span class="s2">.</span><span class="s1">WriteLine</span><span class="s2">(</span><span class="s3">&quot;Digite a data de entrada: &quot;</span><span class="s2">);</span>
+                <span class="s0">string </span><span class="s1">dataEntrada </span><span class="s2">= </span><span class="s1">Console</span><span class="s2">.</span><span class="s1">ReadLine</span><span class="s2">();</span>
+                <span class="s1">Console</span><span class="s2">.</span><span class="s1">WriteLine</span><span class="s2">(</span><span class="s3">&quot;Digite a data de saída: &quot;</span><span class="s2">);</span>
+                <span class="s0">string </span><span class="s1">dataSaida </span><span class="s2">= </span><span class="s1">Console</span><span class="s2">.</span><span class="s1">ReadLine</span><span class="s2">();</span>
+
+                <span class="s1">Reservas r </span><span class="s2">= </span><span class="s0">new </span><span class="s1">Reservas</span><span class="s2">( </span><span class="s1">id</span><span class="s2">,  </span><span class="s1">id</span><span class="s2">, </span><span class="s1">dataEntrada</span><span class="s2">,  </span><span class="s1">dataSaida</span><span class="s2">,  </span><span class="s1">us</span><span class="s2">.</span><span class="s1">Usuario</span><span class="s2">, </span><span class="s1">us</span><span class="s2">.</span><span class="s1">Senha</span><span class="s2">);</span>
+                
+                <span class="s1">EasyCSV</span><span class="s2">.</span><span class="s1">InsereCSV</span><span class="s2">(</span><span class="s1">id </span><span class="s2">+ </span><span class="s3">&quot;, &quot; </span><span class="s2">+ </span><span class="s1">id </span><span class="s2">+ </span><span class="s3">&quot;, &quot; </span><span class="s2">+ </span><span class="s1">dataEntrada </span><span class="s2">+ </span><span class="s3">&quot;, &quot; </span><span class="s2">+ </span><span class="s1">dataSaida </span><span class="s2">+ </span><span class="s3">&quot;, &quot; </span><span class="s2">+ </span><span class="s1">us</span><span class="s2">.</span><span class="s1">Usuario </span><span class="s2">+ </span><span class="s3">&quot;, &quot; </span><span class="s2">+ </span><span class="s1">us</span><span class="s2">.</span><span class="s1">Senha</span><span class="s2">, </span><span class="s3">&quot;reservas.csv&quot;</span><span class="s2">);</span>
+                <span class="s0">return true</span><span class="s2">;</span>
+            <span class="s2">}</span>
+
+            <span class="s0">return false</span><span class="s2">;</span>
+        <span class="s2">}</span>
+
+        <span class="s0">public bool </span><span class="s1">VerificaReserva</span><span class="s2">(</span><span class="s0">int </span><span class="s1">id</span><span class="s2">)</span>
+        <span class="s2">{</span>
+            <span class="s1">Quartos q </span><span class="s2">= </span><span class="s0">new </span><span class="s1">Quartos</span><span class="s2">();</span>
+
+            <span class="s0">if </span><span class="s2">(</span><span class="s1">q</span><span class="s2">.</span><span class="s1">Status</span><span class="s2">)</span>
+            <span class="s2">{</span>
+                <span class="s0">return false</span><span class="s2">;</span>
+            <span class="s2">}</span>
+
+            <span class="s0">return true</span><span class="s2">;</span>
+        <span class="s2">}</span>
+
+        <span class="s0">public void </span><span class="s1">AreaStaff</span><span class="s2">()</span>
+        <span class="s2">{</span>
+            <span class="s1">Console</span><span class="s2">.</span><span class="s1">WriteLine</span><span class="s2">(</span><span class="s3">&quot;Digite sua matricula: &quot;</span><span class="s2">);</span>
+            <span class="s0">string </span><span class="s1">matricula </span><span class="s2">= </span><span class="s1">Console</span><span class="s2">.</span><span class="s1">ReadLine</span><span class="s2">();</span>
+
+            <span class="s1">Administrador admin </span><span class="s2">= </span><span class="s0">new </span><span class="s1">Administrador</span><span class="s2">();</span>
+            <span class="s0">if </span><span class="s2">(</span><span class="s1">admin</span><span class="s2">.</span><span class="s1">CheckFuncionario</span><span class="s2">(</span><span class="s1">matricula</span><span class="s2">))</span>
+            <span class="s2">{</span>
+                <span class="s1">admin</span><span class="s2">.</span><span class="s1">Administracao</span><span class="s2">();</span>
+            <span class="s2">}</span>
+
+            <span class="s1">Console</span><span class="s2">.</span><span class="s1">WriteLine</span><span class="s2">(</span><span class="s3">&quot;Matrícula não consta no sistema.&quot;</span><span class="s2">);</span>
+        <span class="s2">}</span>
+    <span class="s2">}</span>
+<span class="s2">}</span></pre>
+</body>
+</html>
